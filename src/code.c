@@ -149,3 +149,16 @@ unsigned int next_gen(char past_table[T_WIDTH][T_HEIGHT])
 
 	return flag;
 }
+
+void print_table(char table[T_WIDTH][T_HEIGHT])
+{
+	unsigned int i;
+	unsigned int j;
+
+	for (j = 0; j < T_HEIGHT; j++) {
+		for (i = 0; i < T_WIDTH; i++) {
+			printf("%c", table[i][j]);
+		}
+		printf("\n");
+	}
+}
