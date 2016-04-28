@@ -17,6 +17,15 @@ int main()
 {
 	srand(time(NULL));
 	char table[T_WIDTH][T_HEIGHT];
+
+	clear_table(table);
+
+	first_gen(table);
+
+	do {
+		print_table(table);
+	} while (!next_gen(table));
+
 	return 0;
 }
 
