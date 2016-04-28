@@ -162,3 +162,16 @@ void print_table(char table[T_WIDTH][T_HEIGHT])
 		printf("\n");
 	}
 }
+
+
+void clear_table(char table[T_WIDTH][T_HEIGHT])
+{
+	unsigned int i;
+	unsigned int j;
+
+	for (j = 0; j < T_HEIGHT; j++) {
+		for (i = 0; i < T_WIDTH; i++) {
+			table[i][j] = DEAD;
+		}
+	}
+}
