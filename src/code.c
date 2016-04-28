@@ -23,6 +23,9 @@ int main()
 
 	first_gen(table);
 
+	system("resize -s 10 20");
+	system("clear");
+
 	do {
 		print_table(table);
 		usleep(1000 * 100);
