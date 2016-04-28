@@ -18,3 +18,17 @@ int main()
 	srand(time(NULL));
 	return 0;
 }
+
+void first_gen(char table[T_WIDTH][T_HEIGHT])
+{
+	char c[2] = {LIVING, DEAD};
+
+	unsigned int i;
+	unsigned int j;
+
+	for (j = 0; j < T_HEIGHT; j++) {
+		for (i = 0; i < T_WIDTH; i++) {
+			table[i][j] = c[rand() % 2];
+		}
+	}
+}
