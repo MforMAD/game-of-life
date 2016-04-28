@@ -32,3 +32,43 @@ void first_gen(char table[T_WIDTH][T_HEIGHT])
 		}
 	}
 }
+
+
+unsigned int neighbor_count(char table[T_WIDTH][T_HEIGHT], unsigned int height, unsigned int width)
+{
+	unsigned int count = 0;
+
+	if (table[width][!((height + 1) == T_HEIGHT) * (height + 1)] == LIVING) {
+		count++;
+	}
+
+	if (table[((width == 0) * (T_WIDTH - 1)) + (!(width == 0) * (width - 1))][!((height + 1) == T_HEIGHT) * (height + 1)] == LIVING) {
+		count++;
+	}
+
+	if (table[!((width + 1) == T_WIDTH) * (width + 1)][!((height + 1) == T_HEIGHT) * (height + 1)] == LIVING) {
+		count++;
+	}
+
+	if (table[width][((height == 0) * (T_HEIGHT - 1)) + (!(height == 0) * (height - 1))] == LIVING) {
+		count++;
+	}
+
+	if (table[!((width + 1) == T_WIDTH) * (width + 1)][((height == 0) * (T_HEIGHT - 1)) + (!(height == 0) * (height - 1))] == LIVING) {
+		count++;
+	}
+
+	if (table[((width == 0) * (T_WIDTH - 1)) + (!(width == 0) * (width - 1))][((height == 0) * (T_HEIGHT - 1)) + (!(height == 0) * (height - 1))] == LIVING) {
+		count++;
+	}
+
+	if (table[((width == 0) * (T_WIDTH - 1)) + (!(width == 0) * (width - 1))][height] == LIVING) {
+		count++;
+	}
+
+	if (table[!((width + 1) == T_WIDTH) * (width + 1)][height] == LIVING) {
+		count++;
+	}
+
+	return count;
+}
