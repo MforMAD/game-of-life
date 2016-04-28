@@ -16,6 +16,7 @@ void clear_table(char table[T_WIDTH][T_HEIGHT]);
 int main()
 {
 	srand(time(NULL));
+	char table[T_WIDTH][T_HEIGHT];
 	return 0;
 }
 
