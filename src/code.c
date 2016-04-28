@@ -3,6 +3,8 @@
 #define LIVING '#'
 #define DEAD ' '
 
+void first_gen(char table[T_WIDTH][T_HEIGHT]);
+
 int main()
 {
 	return 0;
