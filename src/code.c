@@ -4,6 +4,7 @@
 #define DEAD ' '
 
 void first_gen(char table[T_WIDTH][T_HEIGHT]);
+unsigned int neighbor_count(char table[T_WIDTH][T_HEIGHT], unsigned int height, unsigned int width);
 
 int main()
 {
