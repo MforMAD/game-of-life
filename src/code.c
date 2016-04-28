@@ -72,3 +72,39 @@ unsigned int neighbor_count(char table[T_WIDTH][T_HEIGHT], unsigned int height, 
 
 	return count;
 }
+
+
+unsigned int endgame_check(char past_table[T_WIDTH][T_HEIGHT], char future_table[T_WIDTH][T_HEIGHT])
+{
+	unsigned int i;
+	unsigned int j;
+	unsigned int f = 0;
+
+	for (j = 0; j < T_HEIGHT; j++) {
+		for (i = 0; i < T_WIDTH; i++) {
+			if (future_table[i][j] == LIVING) {
+				f++;
+			}
+		}
+	}
+
+	if (!f) {
+		return 1;
+	}
+
+	f = 0;
+
+	for (j = 0; j < T_HEIGHT; j++) {
+		for (i = 0; i < T_WIDTH; i++) {
+			if (future_table[i][j] != past_table[i][j]) {
+				f++;
+			}
+		}
+	}
+
+	if (!f) {
+		return 1;
+	}
+
+	return 0;
+}
