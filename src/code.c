@@ -108,3 +108,44 @@ unsigned int endgame_check(char past_table[T_WIDTH][T_HEIGHT], char future_table
 
 	return 0;
 }
+
+
+unsigned int next_gen(char past_table[T_WIDTH][T_HEIGHT])
+{
+	char future_table[T_WIDTH][T_HEIGHT];
+
+	unsigned int i;
+	unsigned int j;
+	unsigned int neigh_cnt;
+	unsigned int flag;
+
+	for (j = 0; j < T_HEIGHT; j++) {
+		for (i = 0; i < T_WIDTH; i++) {
+			neigh_cnt = neighbor_count(past_table, j, i);
+
+			if (past_table[i][j] == DEAD) {
+				if (neigh_cnt == 3) {
+					future_table[i][j] = LIVING;
+				} else {
+					future_table[i][j] = DEAD;
+				}
+			} else {
+				if (neigh_cnt == 2 || neigh_cnt == 3) {
+					future_table[i][j] = LIVING;
+				} else {
+					future_table[i][j] = DEAD;
+				}
+			}
+		}
+	}
+
+	flag = endgame_check(past_table, future_table);
+
+	for (j = 0; j < T_HEIGHT; j++) {
+		for (i = 0; i < T_WIDTH; i++) {
+			past_table[i][j] = future_table[i][j];
+		}
+	}
+
+	return flag;
+}
