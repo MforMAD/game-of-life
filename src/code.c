@@ -1,5 +1,6 @@
 #include <time.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #define T_HEIGHT 10
 #define T_WIDTH T_HEIGHT * 2
@@ -24,6 +25,7 @@ int main()
 
 	do {
 		print_table(table);
+		usleep(1000 * 100);
 	} while (!next_gen(table));
 
 	return 0;
