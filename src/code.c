@@ -1,6 +1,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdio.h>
 
 #define T_HEIGHT 10
 #define T_WIDTH T_HEIGHT * 2
