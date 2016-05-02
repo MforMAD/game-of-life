@@ -124,6 +124,24 @@ unsigned int endgame_check(char past_table[T_WIDTH][T_HEIGHT], char future_table
 		return 1;
 	}
 
+	for (f = 0, j = 0; j < T_HEIGHT; j++) {
+		for (i = 0; i < T_WIDTH; i++) {
+			if (past_past_table[i][j] != future_table[i][j]) {
+				f++;
+			}
+		}
+	}
+
+	if (!f) {
+		return 1;
+	}
+
+	for (f = 0, j = 0; j < T_HEIGHT; j++) {
+		for (i = 0; i < T_WIDTH; i++) {
+			past_past_table[i][j] = past_table[i][j];
+		}
+	}
+
 	return 0;
 }
 
