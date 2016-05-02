@@ -32,6 +32,8 @@ int main()
 		usleep(1000 * 100);
 	} while (!next_gen(table));
 
+	print_table(table);
+
 	return 0;
 }
 
@@ -92,11 +94,13 @@ unsigned int neighbor_count(char table[T_WIDTH][T_HEIGHT], unsigned int height, 
 
 unsigned int endgame_check(char past_table[T_WIDTH][T_HEIGHT], char future_table[T_WIDTH][T_HEIGHT])
 {
+	static char past_past_table[T_WIDTH][T_HEIGHT] = {0};
+
 	unsigned int i;
 	unsigned int j;
-	unsigned int f = 0;
+	unsigned int f;
 
-	for (j = 0; j < T_HEIGHT; j++) {
+	for (f = 0, j = 0; j < T_HEIGHT; j++) {
 		for (i = 0; i < T_WIDTH; i++) {
 			if (future_table[i][j] == LIVING) {
 				f++;
@@ -108,9 +112,7 @@ unsigned int endgame_check(char past_table[T_WIDTH][T_HEIGHT], char future_table
 		return 1;
 	}
 
-	f = 0;
-
-	for (j = 0; j < T_HEIGHT; j++) {
+	for (f = 0, j = 0; j < T_HEIGHT; j++) {
 		for (i = 0; i < T_WIDTH; i++) {
 			if (future_table[i][j] != past_table[i][j]) {
 				f++;
