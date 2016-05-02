@@ -212,3 +212,19 @@ void clear_table(char table[T_WIDTH][T_HEIGHT])
 		}
 	}
 }
+
+void read_table(char table[T_WIDTH][T_HEIGHT], FILE *input_file)
+{
+	unsigned int i;
+	unsigned int j;
+	char temp;
+
+	for (j = 0; j < T_HEIGHT; j++) {
+		for (i = 0; i < T_WIDTH; i++) {
+			fscanf(input_file, "%c", &temp);
+			table[i][j] = (temp == '1') ? '#' : ' ';
+		}
+
+		fgetc(input_file);
+	}
+}
