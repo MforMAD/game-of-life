@@ -190,3 +190,8 @@ void read_table(char table[T_WIDTH][T_HEIGHT], FILE *input_file)
 		fgetc(input_file);
 	}
 }
+
+int main_menu()
+{
+	return 0;
+}
