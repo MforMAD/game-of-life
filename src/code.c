@@ -10,6 +10,7 @@ int main()
 	char table[T_WIDTH][T_HEIGHT];
 	int status;
 
+	status = main_menu();
 	clear_table(table);
 /*
 	FILE *in = fopen("/home/dmitriy/glife/game-of-life/src/test.txt", "r+");
