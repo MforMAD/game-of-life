@@ -194,6 +194,7 @@ void read_table(char table[T_WIDTH][T_HEIGHT], FILE *input_file)
 int main_menu()
 {
 	char ch;
+	printf("1.Новая игра\n2.Помощь\n3.Выход\n");
 	scanf("%s",ch); 
 	return 0;
 }
