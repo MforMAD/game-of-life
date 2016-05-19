@@ -8,6 +8,7 @@ int main()
 {
 	srand(time(NULL));
 	char table[T_WIDTH][T_HEIGHT];
+	int status;
 
 	clear_table(table);
 /*
