@@ -8,8 +8,11 @@ int main()
 {
 	srand(time(NULL));
 	char table[T_WIDTH][T_HEIGHT];
+	int status;
 
-	clear_table(table);
+	status = main_menu();
+	if (status == 1) {
+		clear_table(table);
 /*
 	FILE *in = fopen("/home/dmitriy/glife/game-of-life/src/test.txt", "r+");
 
@@ -17,17 +20,20 @@ int main()
 
 	fclose(in);
 */
-	first_gen(table);
+		first_gen(table);
 
-	system("resize -s 10 20");
-	system("clear");
+		system("resize -s 10 20");
+		system("clear");
 
-	do {
+		do {
+			print_table(table);
+			usleep(1000 * 100);
+		} while (!next_gen(table));
+
 		print_table(table);
-		usleep(1000 * 100);
-	} while (!next_gen(table));
+	}
 
-	print_table(table);
-
+	if (status == -1)
+		return 0;
 	return 0;
 }
