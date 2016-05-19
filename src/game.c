@@ -193,5 +193,7 @@ void read_table(char table[T_WIDTH][T_HEIGHT], FILE *input_file)
 
 int main_menu()
 {
+	char ch;
+	scanf("%s",ch); 
 	return 0;
 }
