@@ -42,9 +42,9 @@ void fill_menu(struct base *Base)
 	levels = gtk_button_new_with_label("Templates");
 	leave = gtk_button_new_with_label("Exit");
 
-	g_signal_connect(start, "clicked", G_CALLBACK(play), Box);
+	g_signal_connect(start, "clicked", G_CALLBACK(play), Base);
 	g_signal_connect(info, "clicked", G_CALLBACK(text), Base);
-	g_signal_connect(levels, "clicked", G_CALLBACK(templates), Box);
+	g_signal_connect(levels, "clicked", G_CALLBACK(templates), Base);
 	g_signal_connect(leave, "clicked", G_CALLBACK(close_app), Base);
 
 	gtk_box_pack_start(GTK_BOX(Box->menu), start, FALSE, FALSE, 0);
@@ -92,7 +92,7 @@ void fill_templates(struct base *Base)
 		template->buttons = malloc(sizeof(GtkWidget *) * template->files_counter);
 		for (i = 0; i < template->files_counter; i++) {
 			template->buttons[i] = gtk_button_new_with_label(_(template->file_name[i]));
-			gtk_box_pack_start(GTK_BOX(Box->levels), template->buttons[i], FALSE, FALSE, 5);
+			gtk_box_pack_start(GTK_BOX(Box->levels), template->buttons[i], FALSE, FALSE, 0);
 			g_signal_connect(template->buttons[i], "clicked", G_CALLBACK(set_level), Base);
 		}
 	}
@@ -133,7 +133,14 @@ void text(GtkWidget *widget, gpointer data)
 
 void templates(GtkWidget *widget, gpointer data)
 {
-	g_print("Templates!\n");
+	struct base *Base = (struct base *)data;
+	struct box *Box = &(Base->boxes);
+	
+	g_object_ref(G_OBJECT(Box->menu));
+	gtk_container_remove(GTK_CONTAINER(Box->content), gtk_widget_get_parent(widget));
+	gtk_box_pack_start(GTK_BOX(Box->content), Box->levels, FALSE, FALSE, 5);
+	
+	gtk_widget_show_all(Base->window);
 }
 
 void close_app(GtkWidget *widget, gpointer data)
@@ -144,5 +151,11 @@ void close_app(GtkWidget *widget, gpointer data)
 
 void set_level(GtkWidget *widget, gpointer data)
 {
-	g_print("Set the level");
+	g_print("Set the level\n");
+}
+
+void base_free(struct base *Base)
+{
+	free(Base->templates.file_name);
+	free(Base->templates.buttons);
 }

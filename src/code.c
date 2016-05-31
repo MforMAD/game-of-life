@@ -5,8 +5,6 @@
 #include <game.h>
 #include <interface.h>
 
-char table[T_WIDTH][T_HEIGHT];
-
 int main(int argc, char *argv[])
 {
 	int GTK = 1; //We check, Does this machine have the GTK library. If true we run interface, else we show console version
@@ -20,12 +18,14 @@ int main(int argc, char *argv[])
 		g_signal_connect(basement.app, "activate", G_CALLBACK(start), &basement);
 		status = g_application_run(G_APPLICATION(basement.app), argc, argv);
 		g_object_unref(basement.app);
+		base_free(&basement);
 
-		return status;;
+		return status;
 	}
 
 	else {
 		int status;
+		char table[T_WIDTH][T_HEIGHT];
 
 		status = main_menu();
 		if (status == 1) {

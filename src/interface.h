@@ -41,6 +41,7 @@ void templates(GtkWidget *widget, gpointer data);
 void close_app(GtkWidget *widget, gpointer data);
 void play(GtkWidget *widget, gpointer data);
 void set_level(GtkWidget *widget, gpointer data);
+void base_free(struct base *Base);
 
 
 
