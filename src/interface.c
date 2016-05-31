@@ -19,7 +19,11 @@ void start(GtkApplication *app, gpointer data)
 	fill_menu(Base);
 	fill_info(Base);
 
+	gtk_box_pack_start(GTK_BOX(Box->content), Box->menu, FALSE, FALSE, 5);
 	gtk_container_add(GTK_CONTAINER(Base->window), Box->content);
+
+	gtk_window_set_default_size (GTK_WINDOW(Base->window), 550, 400);
+
 	gtk_widget_show_all(Base->window);
 }
 
