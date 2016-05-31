@@ -3,8 +3,8 @@
 void start(GtkApplication *app, gpointer data)
 {
 	struct base *Base = (struct base *)data;
-	struct box *Box = &(basement->boxes);
-	struct tpl *Tpl = &(basement->templates);
+	struct box *Box = &(Base->boxes);
+	struct tpl *Tpl = &(Base->templates);
 
 	Base->window = gtk_application_window_new(Base->app);
 	gtk_window_set_title(GTK_WINDOW(Base->window), "Game of life");

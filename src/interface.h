@@ -4,17 +4,9 @@
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 
-struct base {
-	GtkApplication *app;
-	GtkWidget *window;
-	struct tpl templates;
-	struct box boxes;
-	struct map **lattice;
-};
-
-struct tpl {
-	int files_counter;
-	char **file_name;
+struct map {
+	GtkWidget *text;
+	GtkWidget *button;
 };
 
 struct box {
@@ -25,11 +17,18 @@ struct box {
 	GtkWidget *game;
 };
 
-struct map {
-	GtkWidget *text;
-	GtkWidget *button;
+struct tpl {
+	int files_counter;
+	char **file_name;
 };
 
+struct base {
+	GtkApplication *app;
+	GtkWidget *window;
+	struct tpl templates;
+	struct box boxes;
+	struct map **lattice;
+};
 
 void start(GtkApplication *app, gpointer data);
 
