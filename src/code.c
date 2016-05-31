@@ -3,16 +3,31 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <game.h>
+#include <glib/gi18n.h>
+#include <gtk/gtk.h>
 
-int main()
+char table[T_WIDTH][T_HEIGHT];
+
+void start(GtkApplication *app, gpointer data)
 {
-	int GTK = 0; //We check, Does this machine have the GTK library. If true we run interface, else we show console version
+	g_print("Start\n");
+}
+
+int main(int argc, char *argv[])
+{
+	int GTK = 1; //We check, Does this machine have the GTK library. If true we run interface, else we show console version
 	srand(time(NULL));
-	char table[T_WIDTH][T_HEIGHT];
 
 	if (GTK) {
+		int status;
+		GtkApplication *app;
 
-		return 0;
+		app = gtk_application_new("game.of.life", G_APPLICATION_FLAGS_NONE);
+		g_signal_connect(app, "activate", G_CALLBACK(start), NULL);
+		status = g_application_run(G_APPLICATION(app), argc, argv);
+		g_object_unref(app);
+
+		return status;;
 	}
 
 	else {
