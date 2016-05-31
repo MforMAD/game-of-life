@@ -80,7 +80,24 @@ void fill_info(struct base *Base)
 
 void fill_templates(struct base *Base)
 {
+	int i;
+	struct box *Box = &(Base->boxes);
+	struct tpl *template = &(Base->templates);
+	GtkWidget *menu;
 
+	menu = gtk_button_new_with_label("Menu");
+	g_signal_connect(menu, "clicked", G_CALLBACK(call_menu), Base);;
+	template->file_name = search_templates("/home/evgerher/SibSutis/game-of-life/tpl", &(template->files_counter));
+	if (template->files_counter > 0) {
+		template->buttons = malloc(sizeof(GtkWidget *) * template->files_counter);
+		for (i = 0; i < template->files_counter; i++) {
+			template->buttons[i] = gtk_button_new_with_label(_(template->file_name[i]));
+			gtk_box_pack_start(GTK_BOX(Box->levels), template->buttons[i], FALSE, FALSE, 5);
+			g_signal_connect(template->buttons[i], "clicked", G_CALLBACK(set_level), Base);
+		}
+	}
+
+	gtk_box_pack_end(GTK_BOX(Box->levels), menu, FALSE, FALSE, 5);
 }
 
 void play(GtkWidget *widget, gpointer data)
@@ -125,3 +142,7 @@ void close_app(GtkWidget *widget, gpointer data)
 	gtk_application_remove_window(GTK_APPLICATION(Base->app), GTK_WINDOW(Base->window));
 }
 
+void set_level(GtkWidget *widget, gpointer data)
+{
+	g_print("Set the level");
+}

@@ -20,6 +20,7 @@ struct box {
 struct tpl {
 	int files_counter;
 	char **file_name;
+	GtkWidget **buttons;
 };
 
 struct base {
@@ -39,6 +40,8 @@ void text(GtkWidget *widget, gpointer data);
 void templates(GtkWidget *widget, gpointer data);
 void close_app(GtkWidget *widget, gpointer data);
 void play(GtkWidget *widget, gpointer data);
+void set_level(GtkWidget *widget, gpointer data);
+
 
 
 #endif
