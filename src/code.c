@@ -3,8 +3,6 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <game.h>
-#include <glib/gi18n.h>
-#include <gtk/gtk.h>
 
 char table[T_WIDTH][T_HEIGHT];
 
@@ -16,6 +14,7 @@ int main(int argc, char *argv[])
 	if (GTK) {
 		int status;
 		GtkApplication *app;
+		struct base basement;
 
 		app = gtk_application_new("game.of.life", G_APPLICATION_FLAGS_NONE);
 		g_signal_connect(app, "activate", G_CALLBACK(start), NULL);
