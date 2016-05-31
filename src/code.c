@@ -8,11 +8,6 @@
 
 char table[T_WIDTH][T_HEIGHT];
 
-void start(GtkApplication *app, gpointer data)
-{
-	g_print("Start\n");
-}
-
 int main(int argc, char *argv[])
 {
 	int GTK = 1; //We check, Does this machine have the GTK library. If true we run interface, else we show console version
