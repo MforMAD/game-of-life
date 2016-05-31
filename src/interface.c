@@ -1,4 +1,5 @@
 #include <interface.h>
+#include <template.h>
 
 void start(GtkApplication *app, gpointer data)
 {
@@ -18,6 +19,7 @@ void start(GtkApplication *app, gpointer data)
 
 	fill_menu(Base);
 	fill_info(Base);
+	fill_templates(Base);
 
 	gtk_box_pack_start(GTK_BOX(Box->content), Box->menu, FALSE, FALSE, 5);
 	gtk_container_add(GTK_CONTAINER(Base->window), Box->content);
@@ -74,6 +76,11 @@ void fill_info(struct base *Base)
 	gtk_box_pack_start(GTK_BOX(Box->rules), text[1], FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(Box->rules), text[2], FALSE, FALSE, 0);
 	gtk_box_pack_end(GTK_BOX(Box->rules), back, FALSE, FALSE, 0);
+}
+
+void fill_templates(struct base *Base)
+{
+
 }
 
 void play(GtkWidget *widget, gpointer data)
