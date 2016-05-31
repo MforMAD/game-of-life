@@ -1,4 +1,4 @@
-#include "template.h"
+#include <template.h>
 
 // Function search for files "*.tpl" in 'search_dir', write name of files without suff in 'result', returns count of names
 int search_templates(char *search_dir, char **result)
