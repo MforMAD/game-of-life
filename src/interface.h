@@ -31,5 +31,13 @@ struct base {
 };
 
 void start(GtkApplication *app, gpointer data);
+void fill_menu(struct base *Base);
+void fill_info(struct base *Base);
+void call_menu(GtkWidget *widget, gpointer data);
+void text(GtkWidget *widget, gpointer data);
+void templates(GtkWidget *widget, gpointer data);
+void close_app(GtkWidget *widget, gpointer data);
+void play(GtkWidget *widget, gpointer data);
+
 
 #endif
