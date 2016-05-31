@@ -1,7 +1,7 @@
 KEYS = -g -Wall
 INCLUDES = -I src/
 DIRS = ./bin ./obj
-obj_files = ./obj/code.o ./obj/game.o ./obj/template.o
+obj_files = ./obj/code.o ./obj/game.o ./obj/template.o ./obj/interface.o
 GTK_LIB = `pkg-config --cflags --libs gtk+-3.0`
 
 all: $(DIRS) ./bin/code
@@ -23,6 +23,9 @@ obj:
 
 ./obj/template.o: ./src/template.c
 	gcc -c ./src/template.c -o ./obj/template.o $(INCLUDES) $(KEYS)
+
+./obj/interface.o: ./src/interface.c
+	gcc -c ./src/interface.c -o ./obj/interface.o $(INCLUDES) $(KEYS) $(GTK_LIB)
 
 .PHONY: clean
 clean: 

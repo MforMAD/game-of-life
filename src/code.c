@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <game.h>
+#include <interface.h>
 
 char table[T_WIDTH][T_HEIGHT];
 
