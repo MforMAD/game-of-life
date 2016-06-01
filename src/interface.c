@@ -214,7 +214,9 @@ void close_app(GtkWidget *widget, gpointer data)
 
 void set_level(GtkWidget *widget, gpointer data)
 {
-	g_print("Set the level\n");
+	const char *text;
+	text = gtk_button_get_label(GTK_BUTTON(widget));
+	g_print("Set the level \"%s\"\n", text);
 	// free(level);
 	// level = ...
 }
