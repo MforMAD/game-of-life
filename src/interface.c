@@ -221,6 +221,13 @@ void set_level(GtkWidget *widget, gpointer data)
 
 void base_free(struct base *Base)
 {
+	int i;
+	for (i = 0; i < level_height; i++) {
+		free(level[i]);
+		free(Base->lattice[i]);
+	}
+	free(level);
+	free(Base->lattice);
 	free(Base->templates.file_name);
 	free(Base->templates.buttons);
 }
