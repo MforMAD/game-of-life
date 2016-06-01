@@ -7,6 +7,8 @@
 struct pair {
 	GtkWidget *text;
 	GtkWidget *button;
+	int row;
+	int col;
 };
 
 struct box {
