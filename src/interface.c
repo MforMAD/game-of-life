@@ -20,12 +20,13 @@ void start(GtkApplication *app, gpointer data)
 	Box->menu = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
 	Box->rules = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
 	Box->levels = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+	Box->game_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
 	Box->game = gtk_grid_new();
 
 	fill_menu(Base);
 	fill_info(Base);
 	fill_templates(Base);
-	set_default_level(Base);
+	fill_game(Base);
 
 	gtk_box_pack_start(GTK_BOX(Box->content), Box->menu, FALSE, FALSE, 5);
 	gtk_container_add(GTK_CONTAINER(Base->window), Box->content);
@@ -56,7 +57,7 @@ void set_default_level(struct base *Base)
 
 	for (i = 0; i < level_height; i++) {
 		for (j = 0; j < level_width; j++) {
-			level[i][j] = ' ';
+			level[i][j] = '#';
 			char content[2] = {'\0', '\0'};
 			content[0] = level[i][j];
 			Pair[i][j].button = gtk_button_new_with_label(_(content));
@@ -142,6 +143,18 @@ void fill_templates(struct base *Base)
 	gtk_box_pack_end(GTK_BOX(Box->levels), menu, FALSE, FALSE, 5);
 }
 
+void fill_game(struct base *Base)
+{
+	GtkWidget *back;
+	struct box *Box = &(Base->boxes);
+
+	back = gtk_button_new_with_label("Menu");
+	g_signal_connect(back, "clicked", G_CALLBACK(call_menu), Base);
+	gtk_box_pack_start(GTK_BOX(Box->game_box), Box->game, FALSE, FALSE, 10);
+	gtk_box_pack_end(GTK_BOX(Box->game_box), back, FALSE, FALSE, 0);
+	set_default_level(Base);
+}
+
 void play(GtkWidget *widget, gpointer data)
 {
 	g_print("Play!\n");
@@ -150,7 +163,7 @@ void play(GtkWidget *widget, gpointer data)
 	
 	g_object_ref(G_OBJECT(Box->menu));
 	gtk_container_remove(GTK_CONTAINER(Box->content), gtk_widget_get_parent(widget));
-	gtk_box_pack_start(GTK_BOX(Box->content), Box->game, FALSE, FALSE, 5);
+	gtk_box_pack_start(GTK_BOX(Box->content), Box->game_box, FALSE, FALSE, 5);
 	
 	gtk_widget_show_all(Base->window);
 }

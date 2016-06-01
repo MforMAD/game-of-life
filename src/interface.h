@@ -16,6 +16,7 @@ struct box {
 	GtkWidget *menu;
 	GtkWidget *rules;
 	GtkWidget *levels;
+	GtkWidget *game_box;
 	GtkWidget *game;
 };
 
@@ -37,6 +38,7 @@ void start(GtkApplication *app, gpointer data);
 void fill_menu(struct base *Base);
 void fill_info(struct base *Base);
 void fill_templates(struct base *Base);
+void fill_game(struct base *Base);
 void call_menu(GtkWidget *widget, gpointer data);
 void text(GtkWidget *widget, gpointer data);
 void templates(GtkWidget *widget, gpointer data);
