@@ -145,6 +145,14 @@ void fill_templates(struct base *Base)
 void play(GtkWidget *widget, gpointer data)
 {
 	g_print("Play!\n");
+	struct base *Base = (struct base *)data;
+	struct box *Box = &(Base->boxes);
+	
+	g_object_ref(G_OBJECT(Box->menu));
+	gtk_container_remove(GTK_CONTAINER(Box->content), gtk_widget_get_parent(widget));
+	gtk_box_pack_start(GTK_BOX(Box->content), Box->game, FALSE, FALSE, 5);
+	
+	gtk_widget_show_all(Base->window);
 }
 
 void call_menu(GtkWidget *widget, gpointer data)
