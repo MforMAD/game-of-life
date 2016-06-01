@@ -59,8 +59,10 @@ void set_default_level(struct base *Base)
 			content[0] = level[i][j];
 			Pair[i][j].button = gtk_button_new_with_label(_(content));
 			Pair[i][j].text = gtk_label_new(_(content));
+			Pair[i][j].row = i;
+			Pair[i][j].col = j;
 			gtk_widget_hide(Pair[i][j].text);
-			//g_signal_connect(pair[i][j].button, "clicked", G_CALLBACK(change), &pair[i][j]);
+			g_signal_connect(Pair[i][j].button, "clicked", G_CALLBACK(change), &pair[i][j]);
 			gtk_grid_attach(GTK_GRID(Base->boxes.game), Pair[i][j].button, i, j, 1 , 1);
 			gtk_grid_attach(GTK_GRID(Base->boxes.game), Pair[i][j].text, i, j, 1 , 1);
 		}
