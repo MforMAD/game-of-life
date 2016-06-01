@@ -4,6 +4,8 @@
 char **level = NULL;
 int level_width = 5;
 int level_height = 5;
+const char DEAD[] = " ";
+const char ALIVE[] = "#";
 
 void start(GtkApplication *app, gpointer data)
 {
@@ -62,7 +64,7 @@ void set_default_level(struct base *Base)
 			Pair[i][j].row = i;
 			Pair[i][j].col = j;
 			gtk_widget_hide(Pair[i][j].text);
-			g_signal_connect(Pair[i][j].button, "clicked", G_CALLBACK(change), &pair[i][j]);
+			g_signal_connect(Pair[i][j].button, "clicked", G_CALLBACK(change), &Pair[i][j]);
 			gtk_grid_attach(GTK_GRID(Base->boxes.game), Pair[i][j].button, i, j, 1 , 1);
 			gtk_grid_attach(GTK_GRID(Base->boxes.game), Pair[i][j].text, i, j, 1 , 1);
 		}
@@ -200,4 +202,22 @@ void base_free(struct base *Base)
 {
 	free(Base->templates.file_name);
 	free(Base->templates.buttons);
+}
+
+void change(GtkButton *button, gpointer data)
+{
+	const char *text;
+	struct pair *Pair = (struct pair *)data;
+
+	text = gtk_button_get_label(GTK_BUTTON(Pair->button));
+	if (strcmp(text, DEAD) == 0) {
+		gtk_button_set_label(GTK_BUTTON(Pair->button), _(ALIVE));
+		gtk_label_set_text(GTK_LABEL(Pair->text), _(ALIVE));
+		level[Pair->row][Pair->col] = ALIVE[0];
+	}
+	else {
+		gtk_button_set_label(GTK_BUTTON(Pair->button), _(DEAD));
+		gtk_label_set_text(GTK_LABEL(Pair->text), _(DEAD));
+		level[Pair->row][Pair->col] = DEAD[0];
+	}
 }
