@@ -1,11 +1,14 @@
 #include <interface.h>
 #include <template.h>
 
+char **level = NULL;
+int level_width = 5;
+int level_height = 5;
+
 void start(GtkApplication *app, gpointer data)
 {
 	struct base *Base = (struct base *)data;
 	struct box *Box = &(Base->boxes);
-	struct tpl *Tpl = &(Base->templates);
 
 	Base->window = gtk_application_window_new(Base->app);
 	gtk_window_set_title(GTK_WINDOW(Base->window), "Game of life");
@@ -20,6 +23,7 @@ void start(GtkApplication *app, gpointer data)
 	fill_menu(Base);
 	fill_info(Base);
 	fill_templates(Base);
+	set_default_level(Base);
 
 	gtk_box_pack_start(GTK_BOX(Box->content), Box->menu, FALSE, FALSE, 5);
 	gtk_container_add(GTK_CONTAINER(Base->window), Box->content);
@@ -27,6 +31,40 @@ void start(GtkApplication *app, gpointer data)
 	gtk_window_set_default_size (GTK_WINDOW(Base->window), 550, 400);
 
 	gtk_widget_show_all(Base->window);
+}
+
+void set_default_level(struct base *Base)
+{
+	int i;
+	int j;
+	level = malloc(sizeof(char *) * level_height);
+	Base->lattice = malloc(sizeof(struct pair *) * level_height);
+
+	if (level == NULL || Base->lattice == NULL)
+		perror("Something went wrong: ");
+
+	for (i = 0; i < level_height; i++) {
+		level[i] = malloc(sizeof(char) * level_width);
+		Base->lattice[i] = malloc(sizeof(struct pair) * level_width);
+		if (level[i] == NULL || Base->lattice[i] == NULL)
+			perror("Something went wrong: ");
+	}
+
+	struct pair **Pair = Base->lattice;
+
+	for (i = 0; i < level_height; i++) {
+		for (j = 0; j < level_width; j++) {
+			level[i][j] = ' ';
+			char content[2] = {'\0', '\0'};
+			content[0] = level[i][j];
+			Pair[i][j].button = gtk_button_new_with_label(_(content));
+			Pair[i][j].text = gtk_label_new(_(content));
+			gtk_widget_hide(Pair[i][j].text);
+			//g_signal_connect(pair[i][j].button, "clicked", G_CALLBACK(change), &pair[i][j]);
+			gtk_grid_attach(GTK_GRID(Base->boxes.game), Pair[i][j].button, i, j, 1 , 1);
+			gtk_grid_attach(GTK_GRID(Base->boxes.game), Pair[i][j].text, i, j, 1 , 1);
+		}
+	}
 }
 
 void fill_menu(struct base *Base)
@@ -152,6 +190,8 @@ void close_app(GtkWidget *widget, gpointer data)
 void set_level(GtkWidget *widget, gpointer data)
 {
 	g_print("Set the level\n");
+	// free(level);
+	// level = ...
 }
 
 void base_free(struct base *Base)

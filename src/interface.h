@@ -4,7 +4,7 @@
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 
-struct map {
+struct pair {
 	GtkWidget *text;
 	GtkWidget *button;
 };
@@ -28,7 +28,7 @@ struct base {
 	GtkWidget *window;
 	struct tpl templates;
 	struct box boxes;
-	struct map **lattice;
+	struct pair **lattice;
 };
 
 void start(GtkApplication *app, gpointer data);
@@ -42,6 +42,7 @@ void close_app(GtkWidget *widget, gpointer data);
 void play(GtkWidget *widget, gpointer data);
 void set_level(GtkWidget *widget, gpointer data);
 void base_free(struct base *Base);
+void set_default_level(struct base *Base);
 
 
 
