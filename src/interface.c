@@ -6,6 +6,7 @@ int level_width = 5;
 int level_height = 5;
 const char DEAD[] = " ";
 const char ALIVE[] = "#";
+int pause = 1;
 
 void start(GtkApplication *app, gpointer data)
 {
@@ -169,7 +170,7 @@ void play(GtkWidget *widget, gpointer data)
 	g_object_ref(G_OBJECT(Box->menu));
 	gtk_container_remove(GTK_CONTAINER(Box->content), gtk_widget_get_parent(widget));
 	gtk_box_pack_start(GTK_BOX(Box->content), Box->game_box, FALSE, FALSE, 5);
-	
+
 	gtk_widget_show_all(Base->window);
 }
 
