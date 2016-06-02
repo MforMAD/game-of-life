@@ -313,21 +313,30 @@ void steps(GtkWidget *window, gpointer data)
 	struct base *Base = (struct base *)data;
 	struct pair **Pair = Base->lattice;
 
-	next_gen(level);
-
-
-	for (i = 0; i < level_width; i++) {
-		for (j = 0; j < level_height; j++)  {
-			if (level[i][j] == ADEAD[0]) {
-				GtkImage *dead = (GtkImage *) gtk_image_new_from_file("./icons/transparent_25x25.png");
-				gtk_button_set_image(GTK_BUTTON(Pair[i][j].button), (GtkWidget *) dead);
-				gtk_label_set_text(GTK_LABEL(Pair[i][j].text), _(ALIVE));
-			}
-			else {
-				GtkImage *alive = (GtkImage *) gtk_image_new_from_file("./icons/smile_transparent_25x25.png");
-				gtk_button_set_image(GTK_BUTTON(Pair[i][j].button), (GtkWidget *) alive);
-				gtk_label_set_text(GTK_LABEL(Pair[i][j].text), _(ADEAD));
-			}
-		}
+	// next_gen(level);
+	if (level[0][0] != ADEAD[0]) { // LATER DONT FORGET TO CHANGE != to == (!!!!!!!!!!!!!!!!!!!!!!)
+		GtkImage *dead = (GtkImage *) gtk_image_new_from_file("./icons/transparent_25x25.png");
+		gtk_button_set_image(GTK_BUTTON(Pair[0][0].button), (GtkWidget *) dead);
+		gtk_label_set_text(GTK_LABEL(Pair[0][0].text), _(ADEAD));
 	}
+	else {
+		GtkImage *alive = (GtkImage *) gtk_image_new_from_file("./icons/smile_transparent_25x25.png");
+		gtk_button_set_image(GTK_BUTTON(Pair[0][0].button), (GtkWidget *) alive);
+		gtk_label_set_text(GTK_LABEL(Pair[0][0].text), _(ALIVE));
+	}
+
+	// for (i = 0; i < level_width; i++) {
+	// 	for (j = 0; j < level_height; j++)  {
+	// 		if (level[i][j] == ADEAD[0]) {
+	// 			GtkImage *dead = (GtkImage *) gtk_image_new_from_file("./icons/transparent_25x25.png");
+	// 			gtk_button_set_image(GTK_BUTTON(Pair[i][j].button), (GtkWidget *) dead);
+	// 			gtk_label_set_text(GTK_LABEL(Pair[i][j].text), _(ALIVE));
+	// 		}
+	// 		else {
+	// 			GtkImage *alive = (GtkImage *) gtk_image_new_from_file("./icons/smile_transparent_25x25.png");
+	// 			gtk_button_set_image(GTK_BUTTON(Pair[i][j].button), (GtkWidget *) alive);
+	// 			gtk_label_set_text(GTK_LABEL(Pair[i][j].text), _(ADEAD));
+	// 		}
+	// 	}
+	// }
 }
