@@ -6,7 +6,7 @@ int level_width = 5;
 int level_height = 5;
 const char DEAD[] = " ";
 const char ALIVE[] = "#";
-int pause = 1;
+int Pause = 1;
 
 void start(GtkApplication *app, gpointer data)
 {
@@ -37,45 +37,6 @@ void start(GtkApplication *app, gpointer data)
 	gtk_window_set_default_size (GTK_WINDOW(Base->window), 550, 400);
 
 	gtk_widget_show_all(Base->window);
-}
-
-void set_default_level(struct base *Base)
-{
-	int i;
-	int j;
-	level = malloc(sizeof(char *) * level_height);
-	Base->lattice = malloc(sizeof(struct pair *) * level_height);
-
-	if (level == NULL || Base->lattice == NULL)
-		perror("Something went wrong: ");
-
-	for (i = 0; i < level_height; i++) {
-		level[i] = malloc(sizeof(char) * level_width);
-		Base->lattice[i] = malloc(sizeof(struct pair) * level_width);
-		if (level[i] == NULL || Base->lattice[i] == NULL)
-			perror("Something went wrong: ");
-	}
-
-	struct pair **Pair = Base->lattice;
-
-	for (i = 0; i < level_height; i++) {
-		for (j = 0; j < level_width; j++) {
-			level[i][j] = '#';
-			char content[2] = {'\0', '\0'};
-			content[0] = level[i][j];
-			// Pair[i][j].button = gtk_button_new_with_label(_(content));
-			Pair[i][j].button = gtk_button_new();
-			GtkImage *smile = (GtkImage *) gtk_image_new_from_file("./icons/smile_40x40.png");
-			gtk_button_set_image(GTK_BUTTON(Pair[i][j].button), (GtkWidget *) smile);
-			Pair[i][j].text = gtk_label_new(_(content));
-			Pair[i][j].row = i;
-			Pair[i][j].col = j;
-			gtk_widget_hide(Pair[i][j].text);
-			g_signal_connect(Pair[i][j].button, "clicked", G_CALLBACK(change), &Pair[i][j]);
-			gtk_grid_attach(GTK_GRID(Base->boxes.game), Pair[i][j].button, i, j, 1 , 1);
-			gtk_grid_attach(GTK_GRID(Base->boxes.game), Pair[i][j].text, i, j, 1 , 1);
-		}
-	}
 }
 
 void fill_menu(struct base *Base)
@@ -152,13 +113,56 @@ void fill_templates(struct base *Base)
 void fill_game(struct base *Base)
 {
 	GtkWidget *back;
+	GtkWidget *status;
 	struct box *Box = &(Base->boxes);
 
 	back = gtk_button_new_with_label("Menu");
+	status = gtk_button_new_with_label("Start");
 	g_signal_connect(back, "clicked", G_CALLBACK(call_menu), Base);
+	g_signal_connect(status, "clicked", G_CALLBACK(unpause), Base);
 	gtk_box_pack_start(GTK_BOX(Box->game_box), Box->game, FALSE, FALSE, 10);
+	gtk_box_pack_start(GTK_BOX(Box->game_box), status, FALSE, FALSE, 0);
 	gtk_box_pack_end(GTK_BOX(Box->game_box), back, FALSE, FALSE, 0);
 	set_default_level(Base);
+}
+
+void set_default_level(struct base *Base)
+{
+	int i;
+	int j;
+	level = malloc(sizeof(char *) * level_height);
+	Base->lattice = malloc(sizeof(struct pair *) * level_height);
+
+	if (level == NULL || Base->lattice == NULL)
+		perror("Something went wrong: ");
+
+	for (i = 0; i < level_height; i++) {
+		level[i] = malloc(sizeof(char) * level_width);
+		Base->lattice[i] = malloc(sizeof(struct pair) * level_width);
+		if (level[i] == NULL || Base->lattice[i] == NULL)
+			perror("Something went wrong: ");
+	}
+
+	struct pair **Pair = Base->lattice;
+
+	for (i = 0; i < level_height; i++) {
+		for (j = 0; j < level_width; j++) {
+			level[i][j] = '#';
+			char content[2] = {'\0', '\0'};
+			content[0] = level[i][j];
+			// Pair[i][j].button = gtk_button_new_with_label(_(content));
+			Pair[i][j].button = gtk_button_new();
+			GtkImage *smile = (GtkImage *) gtk_image_new_from_file("./icons/smile_40x40.png");
+			gtk_button_set_image(GTK_BUTTON(Pair[i][j].button), (GtkWidget *) smile);
+			Pair[i][j].text = gtk_label_new(_(content));
+			Pair[i][j].row = i;
+			Pair[i][j].col = j;
+			gtk_widget_hide(Pair[i][j].text);
+			g_signal_connect(Pair[i][j].button, "clicked", G_CALLBACK(change), &Pair[i][j]);
+			gtk_grid_attach(GTK_GRID(Base->boxes.game), Pair[i][j].button, i, j, 1 , 1);
+			gtk_grid_attach(GTK_GRID(Base->boxes.game), Pair[i][j].text, i, j, 1 , 1);
+		}
+	}
 }
 
 void play(GtkWidget *widget, gpointer data)
@@ -172,6 +176,22 @@ void play(GtkWidget *widget, gpointer data)
 	gtk_box_pack_start(GTK_BOX(Box->content), Box->game_box, FALSE, FALSE, 5);
 
 	gtk_widget_show_all(Base->window);
+}
+
+void unpause(GtkWidget *widget, gpointer data)
+{
+	struct base *Base = (struct base *)data;
+
+	if (Pause) {
+		Pause = 0;
+		gtk_button_set_label(GTK_BUTTON(widget), "Play");
+		gtk_widget_show_all(Base->window);
+	}
+	else {
+		Pause = 1;
+		gtk_button_set_label(GTK_BUTTON(widget), "Pause");
+		gtk_widget_show_all(Base->window);
+	}
 }
 
 void call_menu(GtkWidget *widget, gpointer data)
