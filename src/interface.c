@@ -1,10 +1,11 @@
 #include <interface.h>
 #include <template.h>
+#include <game.h>
 
 char **level = NULL;
 int level_width = 15;
 int level_height = 15;
-const char DEAD[] = " ";
+const char ADEAD[] = " ";
 const char ALIVE[] = "#";
 int Pause = 1;
 
@@ -114,12 +115,15 @@ void fill_game(struct base *Base)
 {
 	GtkWidget *back;
 	GtkWidget *status;
+	GtkWidget *step;
 	struct box *Box = &(Base->boxes);
 
 	back = gtk_button_new_with_label("Menu");
 	status = gtk_button_new_with_label("Start");
+	step = gtk_button_new_with_label("Step");
 	g_signal_connect(back, "clicked", G_CALLBACK(call_menu), Base);
 	g_signal_connect(status, "clicked", G_CALLBACK(unpause), Base);
+	g_signal_connect(step, "clicked", G_CALLBACK(steps), Base);
 	gtk_box_pack_start(GTK_BOX(Box->game_box), Box->game, FALSE, FALSE, 10);
 	gtk_box_pack_start(GTK_BOX(Box->game_box), status, FALSE, FALSE, 0);
 	gtk_box_pack_end(GTK_BOX(Box->game_box), back, FALSE, FALSE, 0);
@@ -288,7 +292,7 @@ void change(GtkButton *button, gpointer data)
 	struct pair *Pair = (struct pair *)data;
 
 	text = gtk_label_get_text(GTK_LABEL(Pair->text));
-	if (strcmp(text, DEAD) == 0) {
+	if (strcmp(text, ADEAD) == 0) {
 		GtkImage *alive = (GtkImage *) gtk_image_new_from_file("./icons/smile_transparent_25x25.png");
 		gtk_button_set_image(GTK_BUTTON(Pair->button), (GtkWidget *) alive);
 		gtk_label_set_text(GTK_LABEL(Pair->text), _(ALIVE));
@@ -297,7 +301,33 @@ void change(GtkButton *button, gpointer data)
 	else {
 		GtkImage *dead = (GtkImage *) gtk_image_new_from_file("./icons/transparent_25x25.png");
 		gtk_button_set_image(GTK_BUTTON(Pair->button), (GtkWidget *) dead);
-		gtk_label_set_text(GTK_LABEL(Pair->text), _(DEAD));
-		level[Pair->row][Pair->col] = DEAD[0];
+		gtk_label_set_text(GTK_LABEL(Pair->text), _(ADEAD));
+		level[Pair->row][Pair->col] = ADEAD[0];
+	}
+}
+
+void steps(GtkWidget *window, gpointer data)
+{
+	int i;
+	int j;
+	struct base *Base = (struct base *)data;
+	struct pair **Pair = Base->lattice;
+
+	next_gen(level);
+
+
+	for (i = 0; i < level_width; i++) {
+		for (j = 0; j < level_height; j++)  {
+			if (level[i][j] == ADEAD[0]) {
+				GtkImage *dead = (GtkImage *) gtk_image_new_from_file("./icons/transparent_25x25.png");
+				gtk_button_set_image(GTK_BUTTON(Pair[i][j].button), (GtkWidget *) dead);
+				gtk_label_set_text(GTK_LABEL(Pair[i][j].text), _(ALIVE));
+			}
+			else {
+				GtkImage *alive = (GtkImage *) gtk_image_new_from_file("./icons/smile_transparent_25x25.png");
+				gtk_button_set_image(GTK_BUTTON(Pair[i][j].button), (GtkWidget *) alive);
+				gtk_label_set_text(GTK_LABEL(Pair[i][j].text), _(ADEAD));
+			}
+		}
 	}
 }
