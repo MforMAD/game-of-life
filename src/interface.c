@@ -22,6 +22,8 @@ void start(GtkApplication *app, gpointer data)
 	Box->levels = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
 	Box->game_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
 	Box->game = gtk_grid_new();
+	// gtk_grid_set_column_homogeneous(GTK_GRID(Box->game), TRUE);
+	// gtk_grid_set_row_homogeneous(GTK_GRID(Box->game), TRUE);
 
 	fill_menu(Base);
 	fill_info(Base);
@@ -60,7 +62,10 @@ void set_default_level(struct base *Base)
 			level[i][j] = '#';
 			char content[2] = {'\0', '\0'};
 			content[0] = level[i][j];
-			Pair[i][j].button = gtk_button_new_with_label(_(content));
+			// Pair[i][j].button = gtk_button_new_with_label(_(content));
+			Pair[i][j].button = gtk_button_new();
+			GtkImage *smile = (GtkImage *) gtk_image_new_from_file("./icons/smile_40x40.png");
+			gtk_button_set_image(GTK_BUTTON(Pair[i][j].button), (GtkWidget *) smile);
 			Pair[i][j].text = gtk_label_new(_(content));
 			Pair[i][j].row = i;
 			Pair[i][j].col = j;
