@@ -244,14 +244,16 @@ void change(GtkButton *button, gpointer data)
 	const char *text;
 	struct pair *Pair = (struct pair *)data;
 
-	text = gtk_button_get_label(GTK_BUTTON(Pair->button));
+	text = gtk_label_get_text(GTK_LABEL(Pair->text));
 	if (strcmp(text, DEAD) == 0) {
-		gtk_button_set_label(GTK_BUTTON(Pair->button), _(ALIVE));
+		GtkImage *alive = (GtkImage *) gtk_image_new_from_file("./icons/smile_40x40.png");
+		gtk_button_set_image(GTK_BUTTON(Pair->button), (GtkWidget *) alive);
 		gtk_label_set_text(GTK_LABEL(Pair->text), _(ALIVE));
 		level[Pair->row][Pair->col] = ALIVE[0];
 	}
 	else {
-		gtk_button_set_label(GTK_BUTTON(Pair->button), _(DEAD));
+		GtkImage *dead = (GtkImage *) gtk_image_new_from_file("./icons/clean_40x40.png");
+		gtk_button_set_image(GTK_BUTTON(Pair->button), (GtkWidget *) dead);
 		gtk_label_set_text(GTK_LABEL(Pair->text), _(DEAD));
 		level[Pair->row][Pair->col] = DEAD[0];
 	}
