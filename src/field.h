@@ -19,5 +19,6 @@ typedef struct {
 
 void field_print(field *temp_field);
 unsigned int field_next_gen(field *temp_field);
+void field_random_gen(field *temp_field);
 
 #endif
