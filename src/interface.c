@@ -78,7 +78,6 @@ void fill_info(struct base *Base)
 	GtkTextBuffer *buffer;
 	GtkTextIter iter;
 	GtkWidget *back;
-	// GtkTextTag *tag;
 
 	title = gtk_label_new("Game of life.");
 	buffer = gtk_text_buffer_new(NULL);
@@ -268,16 +267,24 @@ void close_app(GtkWidget *widget, gpointer data)
 
 void set_level(GtkWidget *widget, gpointer data)
 {
+	struct base *Base = (struct base *)data;	
 	const char *text;
 	char path[50] = "./tpl/";
-	char *end = (path + strlen(path));
+	char *end = path + strlen(path);
+	char extension[] = ".tpl";
+
 	text = gtk_button_get_label(GTK_BUTTON(widget));
 	strcpy(end, text);
+	end = path + strlen(path);
+	strcpy(end, extension);
 
 	g_print("Set the level \"%s\"\n", text);
 	g_print("Path to template: \"%s\"\n", path);
+	FILE *f = fopen(path, "r");
+	level = field_read_template(level, f);
+	fclose(f);
 
-	// level = ...
+	lattice_update(Base->lattice);
 }
 
 void base_free(struct base *Base)
@@ -317,7 +324,7 @@ void steps(GtkWidget *window, gpointer data)
 	struct base *Base = (struct base *)data;
 	struct pair **Pair = Base->lattice;
 
-	End = field_next_gen(field);
+	End = field_next_gen(level);
 	lattice_update(Pair);
 	gtk_widget_show_all(Base->window);
 }
@@ -376,6 +383,9 @@ void lattice_update(struct pair **Pair)
 
 void call_menu_clean(GtkWidget *widget, gpointer data)
 {
+	struct base *Base = (struct base *)data;
+
 	field_clear(level);
+	lattice_update(Base->lattice);
 	call_menu(widget, data);
 }
