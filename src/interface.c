@@ -129,26 +129,26 @@ void fill_templates(struct base *Base)
 void fill_game(struct base *Base)
 {
 	GtkWidget *back;
-	GtkWidget *status;
+	// GtkWidget *status;
 	GtkWidget *step;
 	GtkWidget *randomize;
 	GtkWidget *clean;
 	struct box *Box = &(Base->boxes);
 
 	back = gtk_button_new_with_label("Menu");
-	status = gtk_button_new_with_label("Start");
+	// status = gtk_button_new_with_label("Start");
 	step = gtk_button_new_with_label("Step");
 	randomize = gtk_button_new_with_label("Randomize");
 	clean = gtk_button_new_with_label("Clean");
 
 	g_signal_connect(back, "clicked", G_CALLBACK(call_menu_clean), Base);
-	g_signal_connect(status, "clicked", G_CALLBACK(unpause), Base);
+	// g_signal_connect(status, "clicked", G_CALLBACK(unpause), Base);
 	g_signal_connect(step, "clicked", G_CALLBACK(steps), Base);
 	g_signal_connect(randomize, "clicked", G_CALLBACK(field_random), Base);
 	g_signal_connect(clean, "clicked", G_CALLBACK(field_clean), Base);
 
 	gtk_box_pack_start(GTK_BOX(Box->game_box), Box->game, FALSE, FALSE, 10);
-	gtk_box_pack_start(GTK_BOX(Box->game_box), status, FALSE, FALSE, 0);
+	// gtk_box_pack_start(GTK_BOX(Box->game_box), status, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(Box->game_box), step, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(Box->game_box), randomize, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(Box->game_box), clean, FALSE, FALSE, 0);
@@ -197,26 +197,26 @@ void play(GtkWidget *widget, gpointer data)
 	gtk_widget_show_all(Base->window);
 }
 
-void unpause(GtkWidget *widget, gpointer data)
-{
-	struct base *Base = (struct base *)data;
+// void unpause(GtkWidget *widget, gpointer data)
+// {
+// 	struct base *Base = (struct base *)data;
 
-	// if (Pause) {
-	// 	Pause = 0;
-	// 	gtk_button_set_label(GTK_BUTTON(widget), "Play");
-	// 	gtk_widget_show_all(Base->window);
-	// }
-	// else {
-	// 	Pause = 1;
-	// 	gtk_button_set_label(GTK_BUTTON(widget), "Pause");
-	// 	gtk_widget_show_all(Base->window);
-	// }
+// 	// if (Pause) {
+// 	// 	Pause = 0;
+// 	// 	gtk_button_set_label(GTK_BUTTON(widget), "Play");
+// 	// 	gtk_widget_show_all(Base->window);
+// 	// }
+// 	// else {
+// 	// 	Pause = 1;
+// 	// 	gtk_button_set_label(GTK_BUTTON(widget), "Pause");
+// 	// 	gtk_widget_show_all(Base->window);
+// 	// }
 
-	while (!End) {
-		steps(NULL, data);
-		usleep(1000000);
-	}
-}
+// 	while (!End) {
+// 		steps(NULL, data);
+// 		usleep(1000000);
+// 	}
+// }
 
 void call_menu(GtkWidget *widget, gpointer data)
 {
