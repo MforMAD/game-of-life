@@ -124,3 +124,38 @@ void field_random_gen(field *temp_field)
 		}
 	}
 }
+
+
+field *field_read_template(field *temp_field, FILE *stream)
+{
+	char buf;
+
+	unsigned int i;
+	unsigned int j;
+	unsigned int temp_flat;
+	unsigned int temp_size;
+
+	fscanf(stream, "%d %d", &temp_flat, &temp_size);
+
+	if (temp_field != NULL) {
+		if (temp_field->table_size != temp_size) {
+			temp_field = field_delete(temp_field);
+		}
+	}
+	
+	temp_field = field_create(temp_size);
+
+	temp_field->flat = temp_flat;
+
+	for (i = 0; i < temp_field->table_size; i++) {
+		for (j = 0; j < temp_field->table_size; j++) {
+			do {
+				buf = fgetc(stream);
+			} while(buf != '0' && buf != '1');
+
+			temp_field->current_table[i][j] = (buf == '1') ? 1 : 0;
+		}
+	}
+
+	return temp_field;
+}
