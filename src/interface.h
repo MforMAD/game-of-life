@@ -5,7 +5,6 @@
 #include <gtk/gtk.h>
 
 struct pair {
-	GtkWidget *text;
 	GtkWidget *button;
 	int row;
 	int col;

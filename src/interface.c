@@ -77,8 +77,8 @@ void fill_info(struct base *Base)
 	GtkWidget *title;
 	GtkWidget *text;
 	GtkTextBuffer *buffer;
-	GtkWidget *back;
 	GtkTextIter iter;
+	GtkWidget *back;
 
 	title = gtk_label_new("Game of life.");
 	buffer = gtk_text_buffer_new(NULL);
@@ -134,15 +134,18 @@ void fill_game(struct base *Base)
 	status = gtk_button_new_with_label("Start");
 	step = gtk_button_new_with_label("Step");
 	randomize = gtk_button_new_with_label("Randomize");
+
 	g_signal_connect(back, "clicked", G_CALLBACK(call_menu), Base);
 	g_signal_connect(status, "clicked", G_CALLBACK(unpause), Base);
 	g_signal_connect(step, "clicked", G_CALLBACK(steps), Base);
 	g_signal_connect(randomize, "clicked", G_CALLBACK(random_field), Base);
+
 	gtk_box_pack_start(GTK_BOX(Box->game_box), Box->game, FALSE, FALSE, 10);
 	gtk_box_pack_start(GTK_BOX(Box->game_box), randomize, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(Box->game_box), status, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(Box->game_box), step, FALSE, FALSE, 0);
 	gtk_box_pack_end(GTK_BOX(Box->game_box), back, FALSE, FALSE, 0);
+
 	set_default_level(Base);
 }
 
@@ -196,13 +199,10 @@ void set_lattice(struct base *Base)
 			Pair[i][j].button = gtk_button_new();
 			GtkImage *clean = (GtkImage *) gtk_image_new_from_file("./icons/transparent_20x20.png");
 			gtk_button_set_image(GTK_BUTTON(Pair[i][j].button), (GtkWidget *) clean);
-			Pair[i][j].text = gtk_label_new(_(content));
 			Pair[i][j].row = i;
 			Pair[i][j].col = j;
-			gtk_widget_hide(Pair[i][j].text);
 			g_signal_connect(Pair[i][j].button, "clicked", G_CALLBACK(change), &Pair[i][j]);
 			gtk_grid_attach(GTK_GRID(Base->boxes.game), Pair[i][j].button, i, j, 1 , 1);
-			gtk_grid_attach(GTK_GRID(Base->boxes.game), Pair[i][j].text, i, j, 1 , 1);
 		}
 	}
 }
@@ -313,24 +313,20 @@ void base_free(struct base *Base)
 
 void change(GtkButton *button, gpointer data)
 {
-	const char *text;
 	struct pair *Pair = (struct pair *)data;
 
-	text = gtk_label_get_text(GTK_LABEL(Pair->text));
-	if (strcmp(text, ADEAD) == 0) {
+	if (level[Pair->row][Pair->col] == ADEAD[0]) {
 		GtkImage *alive;
 		if (Party)
 			alive = (GtkImage *) gtk_image_new_from_file("./icons/parrot_20x20.gif");
 		else
 			alive = (GtkImage *) gtk_image_new_from_file("./icons/smile_transparent_20x20.png");
 		gtk_button_set_image(GTK_BUTTON(Pair->button), (GtkWidget *) alive);
-		gtk_label_set_text(GTK_LABEL(Pair->text), _(ALIVE));
 		level[Pair->row][Pair->col] = ALIVE[0];
 	}
 	else {
 		GtkImage *dead = (GtkImage *) gtk_image_new_from_file("./icons/transparent_20x20.png");
 		gtk_button_set_image(GTK_BUTTON(Pair->button), (GtkWidget *) dead);
-		gtk_label_set_text(GTK_LABEL(Pair->text), _(ADEAD));
 		level[Pair->row][Pair->col] = ADEAD[0];
 	}
 }
@@ -347,12 +343,10 @@ void steps(GtkWidget *window, gpointer data)
 	if (level[0][0] != ADEAD[0]) { // LATER DONT FORGET TO CHANGE != to == (!!!!!!!!!!!!!!!!!!!!!!)
 		GtkImage *dead = (GtkImage *) gtk_image_new_from_file("./icons/transparent_20x20.png");
 		gtk_button_set_image(GTK_BUTTON(Pair[0][0].button), (GtkWidget *) dead);
-		gtk_label_set_text(GTK_LABEL(Pair[0][0].text), _(ADEAD));
 	}
 	else {
 		GtkImage *alive = (GtkImage *) gtk_image_new_from_file("./icons/smile_transparent_20x20.png");
 		gtk_button_set_image(GTK_BUTTON(Pair[0][0].button), (GtkWidget *) alive);
-		gtk_label_set_text(GTK_LABEL(Pair[0][0].text), _(ALIVE));
 	}
 
 }
@@ -388,7 +382,6 @@ void lattice_update(struct pair **Pair)
 			if (level[i][j] == ADEAD[0]) {
 				GtkImage *dead = (GtkImage *) gtk_image_new_from_file("./icons/transparent_20x20.png");
 				gtk_button_set_image(GTK_BUTTON(Pair[i][j].button), (GtkWidget *) dead);
-				gtk_label_set_text(GTK_LABEL(Pair[i][j].text), _(ADEAD));
 			}
 			else {
 				GtkImage *alive;
@@ -397,7 +390,6 @@ void lattice_update(struct pair **Pair)
 				else
 					alive = (GtkImage *) gtk_image_new_from_file("./icons/smile_transparent_20x20.png");
 				gtk_button_set_image(GTK_BUTTON(Pair[i][j].button), (GtkWidget *) alive);
-				gtk_label_set_text(GTK_LABEL(Pair[i][j].text), _(ALIVE));
 			}
 		}
 	}
