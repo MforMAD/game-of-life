@@ -17,4 +17,6 @@ typedef struct {
 	char **future_table;
 } field;
 
+void field_print(field *temp_field);
+
 #endif
