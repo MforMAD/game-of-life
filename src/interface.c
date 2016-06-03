@@ -10,6 +10,7 @@ int level_height = 15;
 const char ADEAD[] = " ";
 const char ALIVE[] = "#";
 int Pause = 1;
+int Party = 0;
 
 void start(GtkApplication *app, gpointer data)
 {
@@ -48,21 +49,25 @@ void fill_menu(struct base *Base)
 	GtkWidget *start;
 	GtkWidget *info;
 	GtkWidget *levels;
+	GtkWidget *party;
 	GtkWidget *leave;
 
 	start = gtk_button_new_with_label("Play");
 	info = gtk_button_new_with_label("Information");
 	levels = gtk_button_new_with_label("Templates");
+	party = gtk_button_new_with_label("PARTY MODE: OFF");
 	leave = gtk_button_new_with_label("Exit");
 
 	g_signal_connect(start, "clicked", G_CALLBACK(play), Base);
 	g_signal_connect(info, "clicked", G_CALLBACK(text), Base);
 	g_signal_connect(levels, "clicked", G_CALLBACK(templates), Base);
+	g_signal_connect(party, "clicked", G_CALLBACK(party_time), NULL);
 	g_signal_connect(leave, "clicked", G_CALLBACK(close_app), Base);
 
 	gtk_box_pack_start(GTK_BOX(Box->menu), start, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(Box->menu), info, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(Box->menu), levels, FALSE, FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(Box->menu), party, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(Box->menu), leave, FALSE, FALSE, 0);
 }
 
@@ -303,7 +308,11 @@ void change(GtkButton *button, gpointer data)
 
 	text = gtk_label_get_text(GTK_LABEL(Pair->text));
 	if (strcmp(text, ADEAD) == 0) {
-		GtkImage *alive = (GtkImage *) gtk_image_new_from_file("./icons/parrot_20x20.gif");
+		GtkImage *alive;
+		if (Party)
+			alive = (GtkImage *) gtk_image_new_from_file("./icons/parrot_20x20.gif");
+		else
+			alive = (GtkImage *) gtk_image_new_from_file("./icons/smile_transparent_20x20.png");
 		gtk_button_set_image(GTK_BUTTON(Pair->button), (GtkWidget *) alive);
 		gtk_label_set_text(GTK_LABEL(Pair->text), _(ALIVE));
 		level[Pair->row][Pair->col] = ALIVE[0];
@@ -349,4 +358,17 @@ void steps(GtkWidget *window, gpointer data)
 	// 		}
 	// 	}
 	// }
+}
+
+void party_time(GtkWidget *widget, gpointer data)
+{
+	if (Party == 0) {
+		Party = 1;
+		gtk_button_set_label(GTK_BUTTON(widget), "PARTY MODE: ON");
+	}
+	else {
+		Party = 0;
+		gtk_button_set_label(GTK_BUTTON(widget), "PARTY MODE: OFF");
+
+	}
 }
