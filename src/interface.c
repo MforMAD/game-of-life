@@ -36,7 +36,7 @@ void start(GtkApplication *app, gpointer data)
 	gtk_box_pack_start(GTK_BOX(Box->content), Box->menu, FALSE, FALSE, 5);
 	gtk_container_add(GTK_CONTAINER(Base->window), Box->content);
 
-	gtk_window_resize(GTK_WINDOW(Base->window), 150, 250);
+	gtk_window_resize(GTK_WINDOW(Base->window), 160, 250);
 
 	gtk_widget_show_all(Base->window);
 }
@@ -259,7 +259,7 @@ void call_menu(GtkWidget *widget, gpointer data)
 	g_object_ref(G_OBJECT(parent));
 	gtk_container_remove(GTK_CONTAINER(Box->content), parent);
 	gtk_box_pack_start(GTK_BOX(Box->content), Box->menu, FALSE, FALSE, 5);
-	gtk_window_resize(GTK_WINDOW(Base->window), 150, 250);
+	gtk_window_resize(GTK_WINDOW(Base->window), 160, 250);
 	gtk_container_set_border_width(GTK_CONTAINER(Base->window), 50);
 
 	gtk_widget_show_all(Base->window);
