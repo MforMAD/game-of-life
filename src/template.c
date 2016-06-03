@@ -1,16 +1,17 @@
-#include "template.h"
+#include <template.h>
 
-// Function search for files "*.tpl" in 'search_dir', write name of files without suff in 'result', returns count of names
-int search_templates(char *search_dir, char **result)
+// Function search for files "*.tpl" in 'search_dir', write file count in file_count, return array of strings(filenames)
+char **search_templates(int *file_count)
 {
 	char cmd[100] = "find ";
 	char str[20];
+	char **result;
 
 	FILE *temp_file;
 
 	int i;
 
-	strcat(cmd, search_dir);
+	strcat(cmd, "./tpl");
 
 	strcat(cmd, " -name \"*.tpl\" ");
 
@@ -18,13 +19,21 @@ int search_templates(char *search_dir, char **result)
 
 	strcat(cmd, " > tmp_file");
 
-	printf("'%s'\n", cmd);
-
 	system(cmd);
 
 	temp_file = fopen("./tmp_file", "r");
 
 	for (i = 0; !feof(temp_file); i++) {
+		fscanf(temp_file, "%s", str);
+	}
+
+	*file_count = i - 1;
+
+	result = (char**) malloc(*file_count * sizeof(char*));
+
+	rewind(temp_file);
+
+	for (i = 0; i < *file_count; i++) {
 		fscanf(temp_file, "%s", str);
 
 		result[i] = strdup(str);
@@ -34,5 +43,5 @@ int search_templates(char *search_dir, char **result)
 
 	system("rm ./tmp_file");
 
-	return i - 1;
+	return result;
 }

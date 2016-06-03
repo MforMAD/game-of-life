@@ -3,37 +3,49 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <game.h>
+#include <interface.h>
 
-int main()
+int main(int argc, char *argv[])
 {
+	int GTK = 1; //We check, Does this machine have the GTK library. If true we run interface, else we show console version
 	srand(time(NULL));
-	char table[T_WIDTH][T_HEIGHT];
-	int status;
 
-	status = main_menu();
-	if (status == 1) {
-		clear_table(table);
-/*
-	FILE *in = fopen("/home/dmitriy/glife/game-of-life/src/test.txt", "r+");
+	if (GTK) {
+		int status;
+		struct base basement;
 
-	read_table(table, in);
+		basement.app = gtk_application_new("game.of.life", G_APPLICATION_FLAGS_NONE);
+		g_signal_connect(basement.app, "activate", G_CALLBACK(start), &basement);
+		status = g_application_run(G_APPLICATION(basement.app), argc, argv);
+		g_object_unref(basement.app);
+		base_free(&basement);
 
-	fclose(in);
-*/
-		first_gen(table);
-
-		system("resize -s 10 20");
-		system("clear");
-
-		do {
-			print_table(table);
-			usleep(1000 * 100);
-		} while (!next_gen(table));
-
-		print_table(table);
+		return status;
 	}
 
-	if (status == -1)
+	else {
+		int status;
+		char table[T_WIDTH][T_HEIGHT];
+
+		status = main_menu();
+		if (status == 1) {
+			clear_table(table);
+			first_gen(table);
+
+			system("resize -s 10 20");
+			system("clear");
+
+			do {
+				print_table(table);
+				usleep(1000 * 100);
+			} while (!next_gen(table));
+
+			print_table(table);
+		}
+
+		if (status == -1)
+			return 0;
 		return 0;
-	return 0;
+	}
+
 }
