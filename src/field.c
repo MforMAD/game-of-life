@@ -159,3 +159,17 @@ field *field_read_template(field *temp_field, FILE *stream)
 
 	return temp_field;
 }
+
+
+void field_clear(field *temp_field)
+{
+	unsigned int i;
+	unsigned int j;
+
+	for (i = 0; i < temp_field->table_size; i++) {
+		for (j = 0; j < temp_field->table_size; j++) {
+			temp_field->current_table[i][j] = 0;
+			temp_field->future_table[i][j] = 0;
+		}
+	}
+}
