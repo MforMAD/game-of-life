@@ -211,3 +211,14 @@ static void table_delete(char **temp_table, unsigned int table_size)
 
 	free(temp_table);
 }
+
+
+field *field_delete(field *temp_field)
+{
+	table_delete(temp_field->current_table, temp_field->table_size);
+	table_delete(temp_field->future_table, temp_field->table_size);
+
+	free(temp_field);
+
+	return NULL;
+}
