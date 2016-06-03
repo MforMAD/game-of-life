@@ -135,7 +135,7 @@ void fill_game(struct base *Base)
 	step = gtk_button_new_with_label("Step");
 	randomize = gtk_button_new_with_label("Randomize");
 
-	g_signal_connect(back, "clicked", G_CALLBACK(call_menu), Base);
+	g_signal_connect(back, "clicked", G_CALLBACK(call_menu_clean), Base);
 	g_signal_connect(status, "clicked", G_CALLBACK(unpause), Base);
 	g_signal_connect(step, "clicked", G_CALLBACK(steps), Base);
 	g_signal_connect(randomize, "clicked", G_CALLBACK(random_field), Base);
@@ -216,7 +216,6 @@ void play(GtkWidget *widget, gpointer data)
 	g_object_ref(G_OBJECT(Box->menu));
 	gtk_container_remove(GTK_CONTAINER(Box->content), gtk_widget_get_parent(widget));
 	gtk_box_pack_start(GTK_BOX(Box->content), Box->game_box, FALSE, FALSE, 5);
-// clean the level
 	gtk_widget_show_all(Base->window);
 }
 
@@ -393,4 +392,10 @@ void lattice_update(struct pair **Pair)
 			}
 		}
 	}
+}
+
+void call_menu_clean(GtkWidget *widget, gpointer data)
+{
+	// level clean
+	call_menu(widget, data);
 }
