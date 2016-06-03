@@ -44,3 +44,34 @@ static unsigned int field_endgame_check(field *temp_field)
 		return 0;
 	}
 }
+
+
+unsigned int field_next_gen(field *temp_field)
+{
+	unsigned int i;
+	unsigned int j;
+	unsigned int flag;
+	unsigned int neighbors;
+
+	for (i = 0; i < temp_field->table_size; i++) {
+		for (j = 0; j < temp_field->table_size; j++) {
+			neighbors = field_neighbors_count(temp_field, i, j);
+
+			if (temp_field->current_table[i][j] == DEAD) {
+				temp_field->future_table[i][j] = (neighbors == 3) ? LIVING : DEAD;
+			} else {
+				temp_field->future_table[i][j] = (neighbors == 2 || neighbors == 3) ? LIVING : DEAD;
+			}
+		}
+	}
+
+	flag = field_endgame_check(temp_field);
+
+	for (i = 0; i < temp_field->table_size; i++) {
+		for (j = 0; j < temp_field->table_size; j++) {
+			temp_field->current_table[i][j] = temp_field->future_table[i][j];
+		}
+	}
+
+	return flag;
+}
