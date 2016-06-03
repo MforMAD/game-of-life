@@ -337,6 +337,9 @@ void steps(GtkWidget *window, gpointer data)
 	struct pair **Pair = Base->lattice;
 
 	// next_gen(level);
+	// lattice_update(Pair);
+
+
 	if (level[0][0] != ADEAD[0]) { // LATER DONT FORGET TO CHANGE != to == (!!!!!!!!!!!!!!!!!!!!!!)
 		GtkImage *dead = (GtkImage *) gtk_image_new_from_file("./icons/transparent_20x20.png");
 		gtk_button_set_image(GTK_BUTTON(Pair[0][0].button), (GtkWidget *) dead);
@@ -348,20 +351,6 @@ void steps(GtkWidget *window, gpointer data)
 		gtk_label_set_text(GTK_LABEL(Pair[0][0].text), _(ALIVE));
 	}
 
-	// for (i = 0; i < level_width; i++) {
-	// 	for (j = 0; j < level_height; j++)  {
-	// 		if (level[i][j] == ADEAD[0]) {
-	// 			GtkImage *dead = (GtkImage *) gtk_image_new_from_file("./icons/transparent_20x20.png");
-	// 			gtk_button_set_image(GTK_BUTTON(Pair[i][j].button), (GtkWidget *) dead);
-	// 			gtk_label_set_text(GTK_LABEL(Pair[i][j].text), _(ALIVE));
-	// 		}
-	// 		else {
-	// 			GtkImage *alive = (GtkImage *) gtk_image_new_from_file("./icons/smile_transparent_20x20.png");
-	// 			gtk_button_set_image(GTK_BUTTON(Pair[i][j].button), (GtkWidget *) alive);
-	// 			gtk_label_set_text(GTK_LABEL(Pair[i][j].text), _(ADEAD));
-	// 		}
-	// 	}
-	// }
 }
 
 void party_time(GtkWidget *widget, gpointer data)
@@ -383,4 +372,26 @@ void random_field(GtkWidget *widget, gpointer data)
 	// random the field
 	// update buttons
 	// gtk_widget_show_all(Base->window);
+}
+
+void lattice_update(struct pair **Pair)
+{
+	for (i = 0; i < level_width; i++) {
+		for (j = 0; j < level_height; j++)  {
+			if (level[i][j] == ADEAD[0]) {
+				GtkImage *dead = (GtkImage *) gtk_image_new_from_file("./icons/transparent_20x20.png");
+				gtk_button_set_image(GTK_BUTTON(Pair[i][j].button), (GtkWidget *) dead);
+				gtk_label_set_text(GTK_LABEL(Pair[i][j].text), _(ADEAD));
+			}
+			else {
+				GtkImage *alive;
+				if (Party)
+					alive = (GtkImage *) gtk_image_new_from_file("./icons/parrot_20x20.gif");
+				else
+					alive = (GtkImage *) gtk_image_new_from_file("./icons/smile_transparent_20x20.png");
+				gtk_button_set_image(GTK_BUTTON(Pair[i][j].button), (GtkWidget *) alive);
+				gtk_label_set_text(GTK_LABEL(Pair[i][j].text), _(ALIVE));
+			}
+		}
+	}
 }
