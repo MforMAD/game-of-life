@@ -111,3 +111,16 @@ static unsigned int field_neighbors_count(field *temp_field, unsigned int h_pos,
 
 	return neighbors;
 }
+
+
+void field_random_gen(field *temp_field)
+{
+	unsigned int i;
+	unsigned int j;
+
+	for (i = 0; i < temp_field->table_size; i++) {
+		for (j = 0; j < temp_field->table_size; j++) {
+			temp_field->current_table[i][j] = rand() % 2;
+		}
+	}
+}
