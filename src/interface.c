@@ -77,17 +77,23 @@ void fill_info(struct base *Base)
 	GtkTextBuffer *buffer;
 	GtkTextIter iter;
 	GtkWidget *back;
+	// GtkTextTag *tag;
 
 	title = gtk_label_new("Game of life.");
 	buffer = gtk_text_buffer_new(NULL);
 
   	gtk_text_buffer_get_iter_at_offset(buffer, &iter, 0);
-	gtk_text_buffer_insert(buffer, &iter, "Any live cell with fewer than two live neighbours dies, as if caused by under-population.\n", -1);
-	gtk_text_buffer_insert(buffer, &iter, "Any live cell with two or three live neighbours lives on to the next generation.\n", -1);
-	gtk_text_buffer_insert(buffer, &iter, "Any live cell with more than three live neighbours dies, as if by over-population.\n", -1);
-	gtk_text_buffer_insert(buffer, &iter, "Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.\n", -1);
+
+  	gtk_text_buffer_create_tag (buffer, "lmarg", "left_margin", 20, NULL);
+  	gtk_text_buffer_insert(buffer, &iter, "The Game of Life, also known simply as Life, is a cellular automaton devised by the British \nmathematician John Horton Conway in 1970.\n", -1);
+	gtk_text_buffer_insert_with_tags_by_name(buffer, &iter, "Any live cell with fewer than two live neighbours dies, as if caused by under-population.\n", -1, "lmarg", NULL);
+	gtk_text_buffer_insert_with_tags_by_name(buffer, &iter, "Any live cell with two or three live neighbours lives on to the next generation.\n", -1, "lmarg", NULL);
+	gtk_text_buffer_insert_with_tags_by_name(buffer, &iter, "Any live cell with more than three live neighbours dies, as if by over-population.\n", -1, "lmarg", NULL);
+	gtk_text_buffer_insert_with_tags_by_name(buffer, &iter, "Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.", -1, "lmarg", NULL);
 
 	text = gtk_text_view_new_with_buffer(buffer);
+
+
 	gtk_text_view_set_editable(GTK_TEXT_VIEW(text), FALSE);
 	back = gtk_button_new_with_label("Menu");
 
