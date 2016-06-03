@@ -21,5 +21,6 @@ void field_print(field *temp_field);
 unsigned int field_next_gen(field *temp_field);
 void field_random_gen(field *temp_field);
 field *field_read_template(field *temp_field, FILE *stream);
+void field_clear(field *temp_field);
 
 #endif
