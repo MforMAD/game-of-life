@@ -4,10 +4,10 @@ DIRS = ./bin ./obj
 obj_files = ./obj/code.o ./obj/game.o ./obj/template.o ./obj/interface.o ./obj/field.o
 GTK_LIB = `pkg-config --cflags --libs gtk+-3.0`
 
-all: $(DIRS) ./bin/code
+all: $(DIRS) ./bin/game_with_gtk
 
-./bin/code: $(obj_files)
-	gcc $(obj_files) -o ./bin/code $(KEYS) $(GTK_LIB)
+./bin/game_with_gtk: $(obj_files)
+	gcc $(obj_files) -o ./bin/game_with_gtk $(KEYS) $(GTK_LIB)
 
 bin:
 	mkdir bin
