@@ -201,22 +201,20 @@ void unpause(GtkWidget *widget, gpointer data)
 {
 	struct base *Base = (struct base *)data;
 
-	if (Pause) {
-		Pause = 0;
-		gtk_button_set_label(GTK_BUTTON(widget), "Play");
-		gtk_widget_show_all(Base->window);
-	}
-	else {
-		Pause = 1;
-		gtk_button_set_label(GTK_BUTTON(widget), "Pause");
-		gtk_widget_show_all(Base->window);
-	}
+	// if (Pause) {
+	// 	Pause = 0;
+	// 	gtk_button_set_label(GTK_BUTTON(widget), "Play");
+	// 	gtk_widget_show_all(Base->window);
+	// }
+	// else {
+	// 	Pause = 1;
+	// 	gtk_button_set_label(GTK_BUTTON(widget), "Pause");
+	// 	gtk_widget_show_all(Base->window);
+	// }
 
-	while (!Pause) {
-		// steps(NULL, data);
-		change(NULL, &(Base->lattice[0][0]));
-		gtk_widget_show_all(Base->window);
-		sleep(1);
+	while (!End) {
+		steps(NULL, data);
+		usleep(1000000);
 	}
 }
 
@@ -347,6 +345,7 @@ void field_random(GtkWidget *widget, gpointer data)
 	struct base *Base = (struct base *)data;
 	field_random_gen(level);
 	lattice_update(Base->lattice);
+	End = 0;
 	gtk_widget_show_all(Base->window);
 }
 
@@ -355,6 +354,7 @@ void field_clean(GtkWidget *widget, gpointer data)
 	struct base *Base = (struct base *)data;
 	field_clear(level);
 	lattice_update(Base->lattice);
+	End = 0;
 	gtk_widget_show_all(Base->window);
 }
 
@@ -385,6 +385,7 @@ void call_menu_clean(GtkWidget *widget, gpointer data)
 {
 	struct base *Base = (struct base *)data;
 
+	End = 0;
 	field_clear(level);
 	lattice_update(Base->lattice);
 	call_menu(widget, data);
