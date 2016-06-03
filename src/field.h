@@ -18,5 +18,6 @@ typedef struct {
 } field;
 
 void field_print(field *temp_field);
+unsigned int field_next_gen(field *temp_field);
 
 #endif
