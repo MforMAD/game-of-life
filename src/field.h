@@ -23,5 +23,6 @@ void field_random_gen(field *temp_field);
 field *field_read_template(field *temp_field, FILE *stream);
 void field_clear(field *temp_field);
 field *field_create(unsigned int field_size);
+field *field_delete(field *temp_field);
 
 #endif
