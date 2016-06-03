@@ -9,6 +9,7 @@ int level_width = 15;
 int level_height = 15;
 int Pause = 1;
 int Party = 0;
+int End = 0;
 
 void start(GtkApplication *app, gpointer data)
 {
@@ -316,19 +317,8 @@ void steps(GtkWidget *window, gpointer data)
 	struct base *Base = (struct base *)data;
 	struct pair **Pair = Base->lattice;
 
-	// next_gen(level);
-	// lattice_update(Pair);
-
-
-	// if (level[0][0] != ADEAD[0]) { // LATER DONT FORGET TO CHANGE != to == (!!!!!!!!!!!!!!!!!!!!!!)
-	// 	GtkImage *dead = (GtkImage *) gtk_image_new_from_file("./icons/transparent_20x20.png");
-	// 	gtk_button_set_image(GTK_BUTTON(Pair[0][0].button), (GtkWidget *) dead);
-	// }
-	// else {
-	// 	GtkImage *alive = (GtkImage *) gtk_image_new_from_file("./icons/smile_transparent_20x20.png");
-	// 	gtk_button_set_image(GTK_BUTTON(Pair[0][0].button), (GtkWidget *) alive);
-	// }
-
+	End = field_next_gen(field);
+	lattice_update(Pair);
 }
 
 void party_time(GtkWidget *widget, gpointer data)
