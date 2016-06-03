@@ -17,3 +17,30 @@ void field_print(field *temp_field)
 		printf("\n");
 	}
 }
+
+
+static unsigned int field_endgame_check(field *temp_field)
+{
+	unsigned int i;
+	unsigned int j;
+	unsigned int flag1;
+	unsigned int flag2;
+
+	for (i = 0, flag1 = 0, flag2 = 0; i < temp_field->table_size; i++) {
+		for (j = 0; j < temp_field->table_size; j++) {
+			if (temp_field->future_table[i][j] == LIVING) {
+				flag1++;
+			}
+
+			if (temp_field->future_table[i][j] != temp_field->current_table[i][j]) {
+				flag2++;
+			}
+		}
+	}
+	
+	if (!flag1 || !flag2) {
+		return 1;
+	} else {
+		return 0;
+	}
+}
