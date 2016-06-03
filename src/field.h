@@ -9,4 +9,12 @@
 #define LIVING 1
 #define DEAD 0
 
+typedef struct {
+	unsigned int flat;
+	unsigned int table_size;
+
+	char **current_table;
+	char **future_table;
+} field;
+
 #endif
