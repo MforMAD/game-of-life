@@ -173,3 +173,29 @@ void field_clear(field *temp_field)
 		}
 	}
 }
+
+
+field *field_create(unsigned int field_size)
+{
+	unsigned int i;
+
+	field *temp_field;
+
+	temp_field = malloc(sizeof(field));
+
+	temp_field->table_size = field_size;
+
+	temp_field->flat = SQUARE;
+
+	temp_field->current_table = malloc(field_size * sizeof(char*));
+	temp_field->future_table = malloc(field_size * sizeof(char*));
+
+	for (i = 0; i < field_size; i++) {
+		temp_field->current_table[i] = malloc(field_size * sizeof(char));
+		temp_field->future_table[i] = malloc(field_size * sizeof(char));
+	}
+
+	field_clear(temp_field);
+
+	return temp_field;
+}
