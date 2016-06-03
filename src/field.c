@@ -199,3 +199,15 @@ field *field_create(unsigned int field_size)
 
 	return temp_field;
 }
+
+
+static void table_delete(char **temp_table, unsigned int table_size)
+{
+	unsigned int i;
+
+	for (i = 0; i < table_size; i++) {
+		free(temp_table[i]);
+	}
+
+	free(temp_table);
+}
