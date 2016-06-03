@@ -7,8 +7,6 @@
 field *level = NULL;
 int level_width = 15;
 int level_height = 15;
-const char ADEAD[] = " ";
-const char ALIVE[] = "#";
 int Pause = 1;
 int Party = 0;
 
@@ -156,7 +154,6 @@ void fill_game(struct base *Base)
 	gtk_box_pack_start(GTK_BOX(Box->game_box), clean, FALSE, FALSE, 0);
 	gtk_box_pack_end(GTK_BOX(Box->game_box), back, FALSE, FALSE, 0);
 
-	set_default_level(Base);
 }
 
 void set_lattice(struct base *Base)
@@ -177,8 +174,6 @@ void set_lattice(struct base *Base)
 
 	for (i = 0; i < level_height; i++) {
 		for (j = 0; j < level_width; j++) {
-			char content[2] = {'\0', '\0'};
-			content[0] = level[i][j];
 			Pair[i][j].button = gtk_button_new();
 			GtkImage *clean = (GtkImage *) gtk_image_new_from_file("./icons/transparent_20x20.png");
 			gtk_button_set_image(GTK_BUTTON(Pair[i][j].button), (GtkWidget *) clean);
@@ -288,10 +283,9 @@ void base_free(struct base *Base)
 {
 	int i;
 	for (i = 0; i < level_height; i++) {
-		free(level[i]);
 		free(Base->lattice[i]);
 	}
-	free(level);
+	level = field_delete(level);
 	free(Base->lattice);
 	free(Base->templates.file_name);
 	free(Base->templates.buttons);
@@ -301,19 +295,19 @@ void change(GtkButton *button, gpointer data)
 {
 	struct pair *Pair = (struct pair *)data;
 
-	if (level[Pair->row][Pair->col] == ADEAD[0]) {
+	if (level->current_table[Pair->row][Pair->col] == DEAD) {
 		GtkImage *alive;
 		if (Party)
 			alive = (GtkImage *) gtk_image_new_from_file("./icons/parrot_20x20.gif");
 		else
 			alive = (GtkImage *) gtk_image_new_from_file("./icons/smile_transparent_20x20.png");
 		gtk_button_set_image(GTK_BUTTON(Pair->button), (GtkWidget *) alive);
-		level[Pair->row][Pair->col] = ALIVE[0];
+		level->current_table[Pair->row][Pair->col] = LIVING;
 	}
 	else {
 		GtkImage *dead = (GtkImage *) gtk_image_new_from_file("./icons/transparent_20x20.png");
 		gtk_button_set_image(GTK_BUTTON(Pair->button), (GtkWidget *) dead);
-		level[Pair->row][Pair->col] = ADEAD[0];
+		level->current_table[Pair->row][Pair->col] = DEAD;
 	}
 }
 
@@ -373,7 +367,7 @@ void lattice_update(struct pair **Pair)
 
 	for (i = 0; i < level_width; i++) {
 		for (j = 0; j < level_height; j++)  {
-			if (level[i][j] == ADEAD[0]) {
+			if (level->current_table == DEAD) {
 				GtkImage *dead = (GtkImage *) gtk_image_new_from_file("./icons/transparent_20x20.png");
 				gtk_button_set_image(GTK_BUTTON(Pair[i][j].button), (GtkWidget *) dead);
 			}
