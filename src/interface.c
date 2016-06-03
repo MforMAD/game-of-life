@@ -1,10 +1,10 @@
 #include <interface.h>
 #include <template.h>
-#include <game.h>
+#include <field.h>
 #include <unistd.h>
 
 
-char **level = NULL;
+field *level = NULL;
 int level_width = 15;
 int level_height = 15;
 const char ADEAD[] = " ";
@@ -28,6 +28,8 @@ void start(GtkApplication *app, gpointer data)
 	Box->game_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
 	Box->game = gtk_grid_new();
 
+	level = field_create(15);
+	set_lattice(Base);
 	fill_menu(Base);
 	fill_info(Base);
 	fill_templates(Base);
@@ -155,33 +157,6 @@ void fill_game(struct base *Base)
 	gtk_box_pack_end(GTK_BOX(Box->game_box), back, FALSE, FALSE, 0);
 
 	set_default_level(Base);
-}
-
-void set_default_level(struct base *Base)
-{
-	int i;
-	int j;
-	level = malloc(sizeof(char *) * level_height);
-
-	if (level == NULL)
-		perror("Something went wrong: ");
-
-	for (i = 0; i < level_height; i++) {
-		level[i] = malloc(sizeof(char) * level_width);
-		if (level[i] == NULL)
-			perror("Something went wrong: ");
-	}
-
-	for (i = 0; i < level_height; i++) {
-		for (j = 0; j < level_width; j++) {
-			level[i][j] = ' ';
-		}
-	}
-
-	// Additional function that creates button map
-
-
-	set_lattice(Base);
 }
 
 void set_lattice(struct base *Base)

@@ -45,7 +45,6 @@ void close_app(GtkWidget *widget, gpointer data);
 void play(GtkWidget *widget, gpointer data);
 void set_level(GtkWidget *widget, gpointer data);
 void base_free(struct base *Base);
-void set_default_level(struct base *Base);
 void unpause(GtkWidget *widget, gpointer data);
 void change(GtkButton *button, gpointer data);
 void steps(GtkWidget *window, gpointer data);
