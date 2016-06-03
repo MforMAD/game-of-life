@@ -52,5 +52,6 @@ void change(GtkButton *button, gpointer data);
 void steps(GtkWidget *window, gpointer data);
 void set_lattice(struct base *Base);
 void party_time(GtkWidget *widget, gpointer data);
+void random_field(GtkWidget *widget, gpointer data);
 
 #endif

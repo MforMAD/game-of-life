@@ -123,15 +123,19 @@ void fill_game(struct base *Base)
 	GtkWidget *back;
 	GtkWidget *status;
 	GtkWidget *step;
+	GtkWidget *randomize;
 	struct box *Box = &(Base->boxes);
 
 	back = gtk_button_new_with_label("Menu");
 	status = gtk_button_new_with_label("Start");
 	step = gtk_button_new_with_label("Step");
+	randomize = gtk_button_new_with_label("Randomize");
 	g_signal_connect(back, "clicked", G_CALLBACK(call_menu), Base);
 	g_signal_connect(status, "clicked", G_CALLBACK(unpause), Base);
 	g_signal_connect(step, "clicked", G_CALLBACK(steps), Base);
+	g_signal_connect(randomize, "clicked", G_CALLBACK(random_field), Base);
 	gtk_box_pack_start(GTK_BOX(Box->game_box), Box->game, FALSE, FALSE, 10);
+	gtk_box_pack_start(GTK_BOX(Box->game_box), randomize, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(Box->game_box), status, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(Box->game_box), step, FALSE, FALSE, 0);
 	gtk_box_pack_end(GTK_BOX(Box->game_box), back, FALSE, FALSE, 0);
@@ -371,4 +375,12 @@ void party_time(GtkWidget *widget, gpointer data)
 		gtk_button_set_label(GTK_BUTTON(widget), "PARTY MODE: OFF");
 
 	}
+}
+
+void random_field(GtkWidget *widget, gpointer data)	
+{
+	// struct base *Base = (struct base *)data;
+	// random the field
+	// update buttons
+	// gtk_widget_show_all(Base->window);
 }
