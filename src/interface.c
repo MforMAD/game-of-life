@@ -38,8 +38,8 @@ void start(GtkApplication *app, gpointer data)
 	gtk_box_pack_start(GTK_BOX(Box->content), Box->menu, FALSE, FALSE, 5);
 	gtk_container_add(GTK_CONTAINER(Base->window), Box->content);
 
-	gtk_window_set_default_size (GTK_WINDOW(Base->window), 550, 400);
-
+	gtk_window_resize(GTK_WINDOW(Base->window), 150, 250);
+	
 	gtk_widget_show_all(Base->window);
 }
 
@@ -212,7 +212,7 @@ void play(GtkWidget *widget, gpointer data)
 	g_object_ref(G_OBJECT(Box->menu));
 	gtk_container_remove(GTK_CONTAINER(Box->content), gtk_widget_get_parent(widget));
 	gtk_box_pack_start(GTK_BOX(Box->content), Box->game_box, FALSE, FALSE, 5);
-
+// clean the level
 	gtk_widget_show_all(Base->window);
 }
 
@@ -249,6 +249,8 @@ void call_menu(GtkWidget *widget, gpointer data)
 	g_object_ref(G_OBJECT(parent));
 	gtk_container_remove(GTK_CONTAINER(Box->content), parent);
 	gtk_box_pack_start(GTK_BOX(Box->content), Box->menu, FALSE, FALSE, 5);
+	gtk_window_resize(GTK_WINDOW(Base->window), 150, 250);
+
 
 	gtk_widget_show_all(Base->window);
 }
@@ -331,8 +333,6 @@ void change(GtkButton *button, gpointer data)
 
 void steps(GtkWidget *window, gpointer data)
 {
-	int i;
-	int j;
 	struct base *Base = (struct base *)data;
 	struct pair **Pair = Base->lattice;
 
@@ -376,6 +376,9 @@ void random_field(GtkWidget *widget, gpointer data)
 
 void lattice_update(struct pair **Pair)
 {
+	int i;
+	int j;
+
 	for (i = 0; i < level_width; i++) {
 		for (j = 0; j < level_height; j++)  {
 			if (level[i][j] == ADEAD[0]) {
