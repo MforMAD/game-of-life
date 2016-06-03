@@ -319,6 +319,7 @@ void steps(GtkWidget *window, gpointer data)
 
 	End = field_next_gen(field);
 	lattice_update(Pair);
+	gtk_widget_show_all(Base->window);
 }
 
 void party_time(GtkWidget *widget, gpointer data)
@@ -336,18 +337,18 @@ void party_time(GtkWidget *widget, gpointer data)
 
 void field_random(GtkWidget *widget, gpointer data)	
 {
-	// struct base *Base = (struct base *)data;
-	// random the field
-	// update buttons
-	// gtk_widget_show_all(Base->window);
+	struct base *Base = (struct base *)data;
+	field_random_gen(level);
+	lattice_update(Base->lattice);
+	gtk_widget_show_all(Base->window);
 }
 
 void field_clean(GtkWidget *widget, gpointer data)	
 {
-	// struct base *Base = (struct base *)data;
-	// clean the field
-	// update buttons
-	// gtk_widget_show_all(Base->window);
+	struct base *Base = (struct base *)data;
+	field_clear(level);
+	lattice_update(Base->lattice);
+	gtk_widget_show_all(Base->window);
 }
 
 void lattice_update(struct pair **Pair)
@@ -357,7 +358,7 @@ void lattice_update(struct pair **Pair)
 
 	for (i = 0; i < level_width; i++) {
 		for (j = 0; j < level_height; j++)  {
-			if (level->current_table == DEAD) {
+			if (level->current_table[i][j] == DEAD) {
 				GtkImage *dead = (GtkImage *) gtk_image_new_from_file("./icons/transparent_20x20.png");
 				gtk_button_set_image(GTK_BUTTON(Pair[i][j].button), (GtkWidget *) dead);
 			}
@@ -375,6 +376,6 @@ void lattice_update(struct pair **Pair)
 
 void call_menu_clean(GtkWidget *widget, gpointer data)
 {
-	// level clean
+	field_clear(level);
 	call_menu(widget, data);
 }
