@@ -75,3 +75,39 @@ unsigned int field_next_gen(field *temp_field)
 
 	return flag;
 }
+
+
+static unsigned int field_neighbors_count(field *temp_field, unsigned int h_pos, unsigned int w_pos)
+{
+	int i;
+	int j;
+	int x;
+	int y;
+	unsigned int neighbors;
+
+	if (temp_field->flat) {
+		for (neighbors = 0, i = -1; i <= 1; i++) {
+			for (j = -1; j <= 1; j++) {
+				x = (i + h_pos + temp_field->table_size) % temp_field->table_size;
+				y = (j + w_pos + temp_field->table_size) % temp_field->table_size;	
+
+				neighbors += temp_field->current_table[x][y];	
+			}
+		}
+	} else {
+		for (neighbors = 0, i = -1; i <= 1; i++) {
+			for (j = -1; j <= 1; j++) {
+				x = i + h_pos;
+				y = j + w_pos;
+
+				if (x >= 0 && x < temp_field->table_size && y >= 0 && y < temp_field->table_size) {
+					neighbors += temp_field->current_table[x][y];
+				}
+			}
+		}
+	}
+
+	neighbors -= temp_field->current_table[h_pos][w_pos];
+
+	return neighbors;
+}
