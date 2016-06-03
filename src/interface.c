@@ -39,7 +39,7 @@ void start(GtkApplication *app, gpointer data)
 	gtk_container_add(GTK_CONTAINER(Base->window), Box->content);
 
 	gtk_window_resize(GTK_WINDOW(Base->window), 150, 250);
-	
+
 	gtk_widget_show_all(Base->window);
 }
 
@@ -74,25 +74,29 @@ void fill_menu(struct base *Base)
 void fill_info(struct base *Base)
 {
 	struct box *Box = &(Base->boxes);
-	GtkWidget *text[3];
-	GtkWidget *rules;
 	GtkWidget *title;
+	GtkWidget *text;
+	GtkTextBuffer *buffer;
 	GtkWidget *back;
+	GtkTextIter iter;
 
 	title = gtk_label_new("Game of life.");
-	rules = gtk_label_new("Rules of the 'Game of life'");
-	text[0] = gtk_label_new("Button Play starts the game.");
-	text[1] = gtk_label_new("Button Templates let's you choose the template for your game.");
-	text[2] = gtk_label_new("Button Exit let's you leave the game.");
+	buffer = gtk_text_buffer_new(NULL);
+
+  	gtk_text_buffer_get_iter_at_offset(buffer, &iter, 0);
+	gtk_text_buffer_insert(buffer, &iter, "Any live cell with fewer than two live neighbours dies, as if caused by under-population.\n", -1);
+	gtk_text_buffer_insert(buffer, &iter, "Any live cell with two or three live neighbours lives on to the next generation.\n", -1);
+	gtk_text_buffer_insert(buffer, &iter, "Any live cell with more than three live neighbours dies, as if by over-population.\n", -1);
+	gtk_text_buffer_insert(buffer, &iter, "Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.\n", -1);
+
+	text = gtk_text_view_new_with_buffer(buffer);
+	gtk_text_view_set_editable(GTK_TEXT_VIEW(text), FALSE);
 	back = gtk_button_new_with_label("Menu");
 
 	g_signal_connect(back, "clicked", G_CALLBACK(call_menu), Base);
 
 	gtk_box_pack_start(GTK_BOX(Box->rules), title, FALSE, FALSE, 5);
-	gtk_box_pack_start(GTK_BOX(Box->rules), rules, FALSE, FALSE, 5);
-	gtk_box_pack_start(GTK_BOX(Box->rules), text[0], FALSE, FALSE, 0);
-	gtk_box_pack_start(GTK_BOX(Box->rules), text[1], FALSE, FALSE, 0);
-	gtk_box_pack_start(GTK_BOX(Box->rules), text[2], FALSE, FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(Box->rules), text, FALSE, FALSE, 0);
 	gtk_box_pack_end(GTK_BOX(Box->rules), back, FALSE, FALSE, 0);
 }
 
