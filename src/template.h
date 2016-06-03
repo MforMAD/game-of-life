@@ -5,6 +5,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-char **search_templates(char *search_dir, int *file_count);
+char **search_templates(int *file_count);
 
 #endif

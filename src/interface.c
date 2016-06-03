@@ -113,7 +113,7 @@ void fill_templates(struct base *Base)
 
 	menu = gtk_button_new_with_label("Menu");
 	g_signal_connect(menu, "clicked", G_CALLBACK(call_menu), Base);;
-	template->file_name = search_templates("/home/evgerher/SibSutis/game-of-life/tpl", &(template->files_counter));
+	template->file_name = search_templates(&(template->files_counter));
 	if (template->files_counter > 0) {
 		template->buttons = malloc(sizeof(GtkWidget *) * template->files_counter);
 		for (i = 0; i < template->files_counter; i++) {

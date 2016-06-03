@@ -1,7 +1,7 @@
 #include <template.h>
 
 // Function search for files "*.tpl" in 'search_dir', write file count in file_count, return array of strings(filenames)
-char **search_templates(char *search_dir, int *file_count)
+char **search_templates(int *file_count)
 {
 	char cmd[100] = "find ";
 	char str[20];
@@ -11,7 +11,7 @@ char **search_templates(char *search_dir, int *file_count)
 
 	int i;
 
-	strcat(cmd, search_dir);
+	strcat(cmd, "./tpl");
 
 	strcat(cmd, " -name \"*.tpl\" ");
 
