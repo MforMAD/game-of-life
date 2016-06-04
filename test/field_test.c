@@ -22,6 +22,8 @@ CTEST(endgame_check_suite, dead_field_test) {
 
     // When
     const unsigned int result = field_endgame_check(test_field);
+    field_delete(test_field);
+    table_delete(test_table);
 
     // Then
     const unsigned int expected_result = 1;
@@ -49,6 +51,8 @@ CTEST(endgame_check_suite, static_field_test) {
 
     // When
     const unsigned int result = field_endgame_check(test_field);
+    field_delete(test_field);
+    table_delete(test_table);
 
     // Then
     const unsigned int expected_result = 1;
