@@ -2,30 +2,33 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
-#include <game.h>
 #include <menu.h>
+#include <field.h>
 
 int main(int argc, char *argv[])
 {
 	srand(time(NULL));
 
 	int status;
-	char table[T_WIDTH][T_HEIGHT];
+	field *level = NULL;
+	unsigned int default_size = 20;
 
 	status = main_menu();
 	if (status == 1) {
-		clear_table(table);
-		first_gen(table);
+		if (level == NULL)
+			level = field_create(default_size);
+		
+		field_random_gen(level);
 
-		system("resize -s 10 20");
+		system("resize -s 40 80");
 		system("clear");
 
 		do {
-			print_table(table);
+			field_print(level);
 			usleep(1000 * 100);
-		} while (!next_gen(table));
+		} while (!field_next_gen(level));
 
-		print_table(table);
+		field_print(level);
 	}
 	if (status == 0)
 		help();
