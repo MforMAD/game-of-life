@@ -16,6 +16,5 @@ unsigned int next_gen(char past_table[T_WIDTH][T_HEIGHT]);
 void print_table(char table[T_WIDTH][T_HEIGHT]);
 void clear_table(char table[T_WIDTH][T_HEIGHT]);
 void read_table(char table[T_WIDTH][T_HEIGHT], FILE *input_file);
-int main_menu();
 
 #endif

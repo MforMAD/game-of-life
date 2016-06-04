@@ -1,3 +1,5 @@
+#include "menu.h"
+
 int main_menu()
 {
         char ch;
