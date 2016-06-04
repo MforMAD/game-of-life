@@ -5,5 +5,6 @@
 #include <stdlib.h>
 
 int main_menu();
+void help();
 
 #endif
