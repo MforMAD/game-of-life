@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <menu.h>
 #include <field.h>
-#icnlude <template.h>
+#include <template.h>
 
 int main(int argc, char *argv[])
 {
@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 	int count;
 	
 	unsigned int i;
-	unsigned int delay = 100;
+	unsigned int delay = 1000;
 	unsigned int default_size;
 	unsigned int template_number;
 	
