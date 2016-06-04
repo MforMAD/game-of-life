@@ -1,18 +1,26 @@
 KEYS = -g -Wall
 INCLUDES = -I src/
+INCLUDES_TEST = -I thirdparty/
 DIRS = ./bin ./obj
+test_obj = ./obj/main_test.o ./obj/field_test.o ./obj/field.o
 obj_files_gtk = ./obj/main_gtk.o ./obj/game.o ./obj/template.o ./obj/interface.o ./obj/field.o
 obj_files_console = ./obj/main_console.o ./obj/game.o ./obj/template.o ./obj/field.o ./obj/menu.o
 
 GTK_LIB = `pkg-config --cflags --libs gtk+-3.0`
 
-all: $(DIRS) ./bin/game_gtk ./bin/game_console
+all: $(DIRS) ./bin/game_gtk ./bin/game_console ./bin/test unit_test
 
 ./bin/game_gtk: $(obj_files_gtk)
 	gcc $(obj_files_gtk) -o ./bin/game_gtk $(KEYS) $(GTK_LIB)
 
 ./bin/game_console: $(obj_files_console)
 	gcc $(obj_files_console) -o ./bin/game_console $(KEYS)
+
+./bin/test: $(DIRS) $(test_obj)
+	gcc $(test_obj) -Wall -o ./bin/test
+
+unit_test:
+	./bin/test
 
 bin:
 	mkdir bin
@@ -25,6 +33,12 @@ obj:
 
 ./obj/main_console.o : ./src/main_console.c
 	gcc -c ./src/main_console.c -o ./obj/main_console.o $(INCLUDES) $(KEYS)
+
+./obj/main_test.o: ./test/main.c
+	gcc -c ./test/main.c -Wall -o ./obj/main_test.o $(INCLUDES) $(INCLUDES_TEST)
+
+./obj/field_test.o: ./test/field_test.c
+	gcc -c ./test/field_test.c -Wall -o ./obj/field_test.o $(INCLUDES) $(INCLUDES_TEST)
 
 ./obj/game.o: ./src/game.c
 	gcc -c ./src/game.c -o ./obj/game.o $(INCLUDES) $(KEYS)
