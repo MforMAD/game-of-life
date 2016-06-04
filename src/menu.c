@@ -25,14 +25,14 @@ void help()
 	FILE *f;
 	char *string;
 	string = malloc(sizeof(char) * 256);
-	if (fopen("help.txt", "r") != NULL)
+	if (fopen("./bin/help.txt", "r") != NULL)
 	{
-		f = fopen("help.txt", "r");
+		f = fopen("./bin/help.txt", "r");
 		while (fgets(string, 256, f) != NULL)
 			printf("%s", string);
 		puts("");
 		fclose(f);
         }
 	else
-		printf("Ошибка, файл не найден");
+	       printf("Ошибка, файл не найден\n");
 }
