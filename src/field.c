@@ -33,7 +33,7 @@ unsigned int field_endgame_check(field *temp_field)
 			}
 		}
 	}
-	
+
 	if (!flag1 || !flag2) {
 		return 1;
 	} else {
@@ -220,14 +220,22 @@ field *field_delete(field *temp_field)
 }
 
 
-void table_set(field *temp_field, char **temp_table)
+void table_set(field *temp_field, char **temp_table, unsigned int flag)
 {
 	unsigned int i;
 	unsigned int j;
 
-	for (i = 0; i < temp_field->table_size; i++) {
-		for (j = 0; j < temp_field->table_size; j++) {
-			temp_field->current_table[i][j] = temp_table[i][j];
+	if (flag) {
+		for (i = 0; i < temp_field->table_size; i++) {
+			for (j = 0; j < temp_field->table_size; j++) {
+				temp_field->current_table[i][j] = temp_table[i][j];
+			}
+		}
+	} else {
+		for (i = 0; i < temp_field->table_size; i++) {
+			for (j = 0; j < temp_field->table_size; j++) {
+				temp_field->future_table[i][j] = temp_table[i][j];
+			}
 		}
 	}
 }
