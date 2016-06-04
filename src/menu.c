@@ -20,4 +20,7 @@ int main_menu()
         return -1;
 }
 
-
+void help()
+{
+	
+}
