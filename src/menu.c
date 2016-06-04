@@ -26,8 +26,12 @@ void help()
 	char *string;
 	string = malloc(sizeof(char) * 256);
 	if (fopen("help.txt", "r") != NULL)
+	{
 		f = fopen("help.txt", "r");
+		while (fgets(string, 256, f) != NULL)
+			printf("%s", string);
+		puts("");
+		flose(f);
 	else
 		printf("Ошибка, файл не найден");
-	fclose(f);
 }
