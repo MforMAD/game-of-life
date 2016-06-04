@@ -17,6 +17,10 @@ typedef struct {
 	char **future_table;
 } field;
 
+
+unsigned int field_endgame_check(field *temp_field);
+unsigned int field_neighbors_count(field *temp_field, unsigned int h_pos, unsigned int w_pos);
+void table_delete(char **temp_table, unsigned int table_size);
 void field_print(field *temp_field);
 unsigned int field_next_gen(field *temp_field);
 void field_random_gen(field *temp_field);
