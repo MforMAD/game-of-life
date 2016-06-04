@@ -24,6 +24,7 @@ void help()
 {
 	FILE *f;
 	char *string;
+	string = malloc(sizeof(char) * 256);
 	f = fopen("help.txt", "r");
 	fclose(f);
 }
