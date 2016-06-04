@@ -1,7 +1,9 @@
 KEYS = -g -Wall
 INCLUDES = -I src/
 DIRS = ./bin ./obj
-obj_files = ./obj/code.o ./obj/game.o ./obj/template.o ./obj/interface.o ./obj/field.o ./obj/menu.o
+obj_files_gtk = ./obj/code.o ./obj/game.o ./obj/template.o ./obj/interface.o ./obj/field.o ./obj/menu.o
+obj_files_console = ./obj/code.o ./obj/game.o ./obj/template.o ./obj/interface.o ./obj/field.o ./obj/menu.o
+
 GTK_LIB = `pkg-config --cflags --libs gtk+-3.0`
 
 all: $(DIRS) ./bin/game_with_gtk
@@ -15,8 +17,11 @@ bin:
 obj:
 	mkdir obj
 
-./obj/code.o : ./src/code.c
-	gcc -c ./src/code.c -o ./obj/code.o $(INCLUDES) $(KEYS) $(GTK_LIB)
+./obj/main_gtk.o : ./src/main_gtk.c
+	gcc -c ./src/main_gtk.c -o ./obj/main_gtk.o $(INCLUDES) $(KEYS) $(GTK_LIB)
+
+./obj/main_console.o : ./src/main_console.c
+	gcc -c ./src/main_console.c -o ./obj/main_console.o $(INCLUDES) $(KEYS)
 
 ./obj/game.o: ./src/game.c
 	gcc -c ./src/game.c -o ./obj/game.o $(INCLUDES) $(KEYS)
