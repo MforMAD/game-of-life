@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <menu.h>
 #include <field.h>
+#icnlude <template.h>
 
 int main(int argc, char *argv[])
 {
