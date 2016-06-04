@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <game.h>
 #include <interface.h>
+#include "menu.h"
 
 int main(int argc, char *argv[])
 {
