@@ -43,7 +43,8 @@ int main(int argc, char *argv[])
 
 			print_table(table);
 		}
-
+		if (status == 0)
+			help();
 		if (status == -1)
 			return 0;
 		return 0;
