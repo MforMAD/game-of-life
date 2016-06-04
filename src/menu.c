@@ -24,4 +24,6 @@ void help()
 {
 	FILE *f;
 	char *string;
+	f = fopen("help.txt", "r");
+	fclose(f);
 }
