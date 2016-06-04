@@ -22,5 +22,6 @@ int main_menu()
 
 void help()
 {
-	
+	FILE *f;
+	char *string;
 }
