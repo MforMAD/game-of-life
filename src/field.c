@@ -228,13 +228,13 @@ void table_set(field *temp_field, char **temp_table, unsigned int flag)
 	if (flag) {
 		for (i = 0; i < temp_field->table_size; i++) {
 			for (j = 0; j < temp_field->table_size; j++) {
-				temp_field->current_table[i][j] = temp_table[i][j];
+				temp_field->future_table[i][j] = temp_table[i][j];
 			}
 		}
 	} else {
 		for (i = 0; i < temp_field->table_size; i++) {
 			for (j = 0; j < temp_field->table_size; j++) {
-				temp_field->future_table[i][j] = temp_table[i][j];
+				temp_field->current_table[i][j] = temp_table[i][j];
 			}
 		}
 	}
