@@ -4,47 +4,27 @@
 
 CTEST(endgame_check_suite, dead_field_test) {
     // Given
-    const float a = 0;
-    const float b = 1;
-    const float c = 1;
+    unsigned int i;
+
+    char **test_table = malloc(4 * sizeof(char*));
+
+    for (i = 0; i < 4; i++) {
+        test_table[i] = malloc(4 * sizeof(char));
+    }
+
+    test_table = {{0}, {0}, {0}, {0},
+                  {0}, {0}, {0}, {0}
+                  {0}, {0}, {0}, {0}
+                  {0}, {0}, {0}, {0}}
+
+    field *test_field = field_create(4);
+    table_set(test_field, table_set);
 
     // When
-    const Quad_root result = quad_solve(a, b, c);
+    const unsigned int result = field_endgame_check(test_field);
 
     // Then
-    const Quad_root expected_result = {.count = WRONG_INPUT};
+    const unsigned int expected_result = 1;
 
-    ASSERT_EQUAL(expected_result.count, result.count);
-}
-
-CTEST(endgame_check_suite, static_field_test) {
-    // Given
-    const float a = 7;
-    const float b = 13;
-    const float c = 2;
-
-    // When
-    const Quad_root result = quad_solve(a, b, c);
-
-    // Then
-    const Quad_root expected_result = {-0.169275299 , -1.687867558, TWO_ROOTS};
-
-    ASSERT_EQUAL(expected_result.count, result.count);
-    ASSERT_DBL_NEAR(expected_result.x1, result.x1);
-    ASSERT_DBL_NEAR(expected_result.x2, result.x2);
-}
-
-CTEST(distance_suite, no_real_roots_test) {
-    // Given
-    const float a = 7;
-    const float b = 2;
-    const float c = 1;
-
-    // When
-    const Quad_root result = quad_solve(a, b, c);
-
-    // Then
-    const Quad_root expected_result = {.count = ZERO_ROOTS};
-
-    ASSERT_EQUAL(expected_result.count, result.count);
+    ASSERT_EQUAL(expected_result, result);
 }
