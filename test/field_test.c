@@ -357,3 +357,43 @@ CTEST(neighbos_count_suite, tor_top_left_corner_field_test) {
 
     ASSERT_EQUAL(expected_result, result);
 }
+
+CTEST(neighbos_count_suite, tor_top_right_corner_field_test) {
+    // Given
+    unsigned int i;
+    field *test_field;
+
+    char **test_table = malloc(3 * sizeof(char*));
+
+    for (i = 0; i < 3; i++) {
+        test_table[i] = malloc(3 * sizeof(char));
+    }
+
+    test_field = field_create(3);
+
+    {
+        test_table[0][0] = 1;
+        test_table[0][1] = 0;
+        test_table[0][2] = 1;
+        test_table[1][0] = 0;
+        test_table[1][1] = 0;
+        test_table[1][2] = 0;
+        test_table[2][0] = 1;
+        test_table[2][1] = 0;
+        test_table[2][2] = 1;
+    }
+
+    table_set(test_field, test_table, 0);
+
+    test_field->flat = TOR;
+
+    // When
+    const unsigned int result = field_neighbors_count(test_field, 0, 0);
+    field_delete(test_field);
+    table_delete(test_table, 3);
+
+    // Then
+    const unsigned int expected_result = 3;
+
+    ASSERT_EQUAL(expected_result, result);
+}
