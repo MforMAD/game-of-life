@@ -9,7 +9,9 @@ int main(int argc, char *argv[])
 {
 	srand(time(NULL));
 
-	int status;
+	int status, *count;
+	char **string;
+	
 	field *level = NULL;
 	unsigned int default_size = 20;
 	while (1)
@@ -34,6 +36,8 @@ int main(int argc, char *argv[])
 		if (status == 0)
 			help();
 		if (status == -1)
+			string = search_templates(count);
+		if (status == -2)
 			return 0;
 	}
 	return 0;
