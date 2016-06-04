@@ -218,3 +218,16 @@ field *field_delete(field *temp_field)
 
 	return NULL;
 }
+
+
+void table_set(field *temp_field, char **temp_table)
+{
+	unsigned int i;
+	unsigned int j;
+
+	for (i = 0; i < temp_field->table_size; i++) {
+		for (j = 0; j < temp_field->table_size; j++) {
+			temp_field->current_table[i][j] = temp_table[i][j];
+		}
+	}
+}
