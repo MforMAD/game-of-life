@@ -31,7 +31,7 @@ obj:
 	gcc -c ./src/field.c -o ./obj/field.o $(INCLUDES) $(KEYS)
 
 ./obj/menu.o: ./src/menu.c
-        gcc -c ./src/menu.c -o ./obj/menu.o $(INCLUDES) $(KEYS)
+	gcc -c ./src/menu.c -o ./obj/menu.o $(INCLUDES) $(KEYS)
 
 .PHONY: clean
 clean: 
