@@ -16,6 +16,9 @@ int main_menu()
                 case '3':
                         return -1;
                         break;
+                case '4':
+                		return -2;
+                		break;            		
         }
         return -1;
 }
