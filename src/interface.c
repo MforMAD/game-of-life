@@ -275,9 +275,6 @@ void set_level(GtkWidget *widget, gpointer data)
 	strcpy(end, text);
 	end = path + strlen(path);
 	strcpy(end, extension);
-
-	g_print("Set the level \"%s\"\n", text);
-	g_print("Path to template: \"%s\"\n", path);
 	FILE *f = fopen(path, "r");
 	level = field_read_template(level, f);
 	fclose(f);
