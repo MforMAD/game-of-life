@@ -3,8 +3,8 @@ INCLUDES = -I src/
 INCLUDES_TEST = -I thirdparty/
 DIRS = ./bin ./obj
 test_obj = ./obj/main_test.o ./obj/field_test.o ./obj/field.o
-obj_files_gtk = ./obj/main_gtk.o ./obj/game.o ./obj/template.o ./obj/interface.o ./obj/field.o
-obj_files_console = ./obj/main_console.o ./obj/game.o ./obj/template.o ./obj/field.o ./obj/menu.o
+obj_files_gtk = ./obj/main_gtk.o ./obj/template.o ./obj/interface.o ./obj/field.o
+obj_files_console = ./obj/main_console.o ./obj/template.o ./obj/field.o ./obj/menu.o
 
 GTK_LIB = `pkg-config --cflags --libs gtk+-3.0`
 
@@ -40,8 +40,6 @@ obj:
 ./obj/field_test.o: ./test/field_test.c
 	gcc -c ./test/field_test.c -Wall -o ./obj/field_test.o $(INCLUDES) $(INCLUDES_TEST)
 
-./obj/game.o: ./src/game.c
-	gcc -c ./src/game.c -o ./obj/game.o $(INCLUDES) $(KEYS)
 
 ./obj/template.o: ./src/template.c
 	gcc -c ./src/template.c -o ./obj/template.o $(INCLUDES) $(KEYS)
