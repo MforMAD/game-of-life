@@ -40,6 +40,7 @@ obj:
 
 ./obj/menu.o: ./src/menu.c
 	gcc -c ./src/menu.c -o ./obj/menu.o $(INCLUDES) $(KEYS)
+	cp ./src/help.txt bin/
 
 .PHONY: clean
 clean: 
