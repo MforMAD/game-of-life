@@ -31,7 +31,8 @@ void help()
 		while (fgets(string, 256, f) != NULL)
 			printf("%s", string);
 		puts("");
-		flose(f);
+		fclose(f);
+        }
 	else
 		printf("Ошибка, файл не найден");
 }
