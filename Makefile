@@ -11,8 +11,8 @@ all: $(DIRS) ./bin/game_gtk ./bin/game_console
 ./bin/game_gtk: $(obj_files_gtk)
 	gcc $(obj_files_gtk) -o ./bin/game_gtk $(KEYS) $(GTK_LIB)
 
-./bin/game_gtk: $(obj_files_console)
-	gcc $(obj_files_console) -o ./bin/game_gtk $(KEYS)
+./bin/game_console: $(obj_files_console)
+	gcc $(obj_files_console) -o ./bin/game_console $(KEYS)
 
 bin:
 	mkdir bin
