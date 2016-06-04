@@ -9,36 +9,128 @@ int main(int argc, char *argv[])
 {
 	srand(time(NULL));
 
-	int status, *count;
+	int status;
+	int count;
+	
+	unsigned int i;
+	unsigned int delay = 100;
+	unsigned int default_size;
+	unsigned int template_number;
+	
+	char buf[20] = "./tpl/";
+	char resize_buf[20] = "resize -s ";
+	char size_buf[20];
 	char **string;
 	
-	field *level = NULL;
-	unsigned int default_size = 20;
+	FILE *template;
+	
+	field *level;
+	
+	default_size = 20;
+	level = NULL;
+	
+	system("resize -s 24 96");
+		
 	while (1)
 	{
+		system("clear");
 		status = main_menu();
-		if (status == 1) {
-			if (level == NULL)
-				level = field_create(default_size);
+				switch (status) {
+				case 0 : 
+					system("clear");
+					help();
+					getchar();
+					getchar();
+					break;
+				case 1 :
+					if (level == NULL) {
+						level = field_create(default_size);
+					}
 		
-			field_random_gen(level);
+					field_random_gen(level);
 
-			system("resize -s 40 80");
-			system("clear");
+					sprintf(size_buf, "%d %d", default_size, default_size);
+	
+					resize_buf[10] = '\0';
 
-			do {
-				field_print(level);
-				usleep(1000 * 100);
-			} while (!field_next_gen(level));
 
-			field_print(level);
+					strcat(resize_buf, size_buf);
+
+					system(resize_buf);
+					system("clear");
+
+					do {
+						field_print(level);
+						usleep(delay * 100);
+					} while (!field_next_gen(level));
+
+					sprintf(size_buf, "%d %d", 24, 96);
+
+					resize_buf[10] = '\0';
+
+					strcat(resize_buf, size_buf);
+
+					system(resize_buf);
+					system("clear");
+
+					field_print(level);
+
+					break;
+				case -1 :
+					system("clear");
+
+					string = search_templates(&count);
+
+					for (i = 0; i < count; i++) {
+						printf("[%d] %s\n", i + 1, string[i]);
+					}
+				
+					scanf("%d", &template_number);
+
+					template_number--;
+
+					strcat(buf, string[template_number]);
+
+					strcat(buf, ".tpl");
+
+					fflush(stdout);
+
+					template = fopen(buf, "r");
+
+					level = field_read_template(level, template);
+
+					fclose(template);
+
+					buf[6] = '\0';
+
+					sprintf(size_buf, "%d %d", level->table_size, level->table_size);
+
+					resize_buf[10] = '\0';
+
+					strcat(resize_buf, size_buf);
+
+					system(resize_buf);
+					system("clear");
+
+					do {
+						field_print(level);
+						usleep(delay * 100);
+					} while (!field_next_gen(level));
+
+					system("resize -s 26 90");
+					system("clear");
+
+					field_print(level);
+
+					getchar();
+					getchar();
+
+					break;
+				case -2 :
+					return 0;
+					break;
 		}
-		if (status == 0)
-			help();
-		if (status == -1)
-			string = search_templates(count);
-		if (status == -2)
-			return 0;
+
 	}
 	return 0;
 }
