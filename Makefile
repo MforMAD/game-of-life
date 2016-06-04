@@ -8,7 +8,7 @@ obj_files_console = ./obj/main_console.o ./obj/template.o ./obj/field.o ./obj/me
 
 GTK_LIB = `pkg-config --cflags --libs gtk+-3.0`
 
-all: gtk $(DIRS) ./bin/game_gtk ./bin/game_console ./bin/test unit_test
+all: $(DIRS) ./bin/game_console ./bin/test unit_test gtk ./bin/game_gtk
 
 gtk:
 	sudo apt-get install libgtk-3-dev
