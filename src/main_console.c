@@ -12,27 +12,29 @@ int main(int argc, char *argv[])
 	int status;
 	field *level = NULL;
 	unsigned int default_size = 20;
-
-	status = main_menu();
-	if (status == 1) {
-		if (level == NULL)
-			level = field_create(default_size);
+	while (1)
+	{
+		status = main_menu();
+		if (status == 1) {
+			if (level == NULL)
+				level = field_create(default_size);
 		
-		field_random_gen(level);
+			field_random_gen(level);
 
-		system("resize -s 40 80");
-		system("clear");
+			system("resize -s 40 80");
+			system("clear");
 
-		do {
+			do {
+				field_print(level);
+				usleep(1000 * 100);
+			} while (!field_next_gen(level));
+
 			field_print(level);
-			usleep(1000 * 100);
-		} while (!field_next_gen(level));
-
-		field_print(level);
+		}
+		if (status == 0)
+			help();
+		if (status == -1)
+			return 0;
 	}
-	if (status == 0)
-		help();
-	if (status == -1)
-		return 0;
 	return 0;
 }
